@@ -28,7 +28,7 @@ void consulta(){
         printf("\nAgendamento nao encontrado!\n");
         printf("________________________\n");
     }else if(strcmp(cliente[num_agenda], "excluido") == 0){
-        printf("\nAgendamento Excluido!\n");
+        printf("\nEsse agendamento foi excluido!\n");
         printf("________________________\n");
     }else{
         printf("\nAgendamento numero: %d\n", num_agenda);
@@ -48,7 +48,7 @@ void atualiza(){
         printf("\nAgendamento nao encontrado!\n");
         printf("________________________\n");
     }else if(strcmp(cliente[num_agenda], "excluido") == 0){
-        printf("\nAgendamento Excluido!\n");
+        printf("\nEsse agendamento foi excluido!\n");
         printf("________________________\n");
     }else{
         printf("\nO que voce deseja alterar? \n");
@@ -89,7 +89,7 @@ void atualiza(){
                 printf("Nova data do Agendamento: ");
                 scanf(" %[^\n]s", data[num_agenda]);
                 printf("Novo horario do Agendamento: ");
-                scanf(" %[^\n]s", horario[agendamentos]);
+                scanf(" %[^\n]s", horario[num_agenda]);
                 printf("\n");
                 printf("Dados atualizados com sucesso :)\n");
                 printf("________________________\n");
@@ -112,7 +112,7 @@ void exclui(){
         printf("\nAgendamento nao encontrado!\n");
         printf("________________________\n");
     }else if(strcmp(cliente[num_agenda], "excluido") == 0){
-        printf("\nAgendamento Excluido!\n");
+        printf("\nEsse agendamento foi excluido!\n");
         printf("________________________\n");
     }else{
         strcpy(cliente[num_agenda], "excluido");
