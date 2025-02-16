@@ -1,0 +1,27 @@
+#include<stdio.h>
+#include<string.h>
+
+void lerItensDaLista(FILE *arq) {
+    char itens[100];
+    while(fscanf(arq, "%s", itens)==1){
+    printf("%s\n", itens);
+    }
+    
+}int main(){
+    FILE *arq;
+arq = fopen("ListaCompras.txt", "w+");
+	
+// 1o. item
+fprintf(arq, "%s\n", "Leite");
+// 2o. item
+fprintf(arq, "%s\n", "Pao");
+// 3o. item
+fprintf(arq, "%s\n", "Presunto");
+// 4o. item
+fprintf(arq, "%s\n", "Manteiga");
+  	
+rewind(arq);
+  	
+lerItensDaLista(arq);
+fclose(arq);
+}

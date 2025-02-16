@@ -1,0 +1,27 @@
+
+#include <stdio.h>
+int contaCaracteresArquivo(FILE* arq){
+    int contador = 0;
+    char c;
+    
+    if(arq == NULL){
+        return -1;
+    }
+    
+    while ((c = fgetc(arq)) != EOF){
+        if (c != ' ' && c != '\n'){
+            contador ++;
+        }
+    }
+    return contador;
+
+}
+
+int main(){
+    FILE* fp = fopen("teste.txt","w+");
+    char *s = "teste";
+    fputs(s,fp);
+    rewind(fp);
+    printf("%d\n",contaCaracteresArquivo(fp));
+    fclose(fp);
+}
