@@ -48,7 +48,7 @@ void menu() {
                 case 3: atualizarPalavra(); break;
                 case 4: apagarPalavra(); break;
                 case 5: mostrarPalavras(); break;
-                case 6: printf("Saindo...\n"); exit(0);
+                case 6: printf("Saindo...\n"); break;
                 default: printf("Opcao invalida!\n");
             }
         }
@@ -56,7 +56,7 @@ void menu() {
 }
 
 void novoJogo() {
-    FILE *file = fopen("palavras.bin", "rb");
+    FILE *file = fopen("palavras.dat", "rb");
     if (!file) {
         printf("Erro ao abrir o arquivo!\n");
         return;
@@ -269,7 +269,7 @@ void menuPosJogo() {
 
 void atualizarPalavra() {
 
-    FILE *file = fopen("palavras.bin", "rb");
+    FILE *file = fopen("palavras.dat", "rb");
     if (!file) {
         printf("Erro ao abrir o arquivo!\n");
         return;
@@ -320,7 +320,7 @@ void atualizarPalavra() {
     for (int i = 0; nova_palavra[i]; i++) {
         nova_palavra[i] = tolower(nova_palavra[i]); 
     }
-    file = fopen("palavras.bin", "rb");
+    file = fopen("palavras.dat", "rb");
     if (!file) {
         printf("Erro ao abrir o arquivo!\n");
         return;
@@ -347,7 +347,7 @@ void atualizarPalavra() {
     strcpy(palavras[escolha - 1], nova_palavra);
 
     // Reescreve o arquivo com a nova palavra
-    file = fopen("palavras.bin", "wb");
+    file = fopen("palavras.dat", "wb");
     if (!file) {
         printf(" \n");
         printf("Erro ao abrir o arquivo para escrita!\n");
@@ -364,7 +364,7 @@ void atualizarPalavra() {
 }
 
 void mostrarPalavras() {
-    FILE *file = fopen("palavras.bin", "rb");
+    FILE *file = fopen("palavras.dat", "rb");
     if (!file) {
         printf("Erro ao abrir o arquivo!\n");
         return;
@@ -380,7 +380,7 @@ void mostrarPalavras() {
 }
 
 void apagarPalavra() {
-    FILE *file = fopen("palavras.bin", "rb");
+    FILE *file = fopen("palavras.dat", "rb");
     if (!file) {
         printf("Erro ao abrir o arquivo!\n");
         return;
@@ -427,7 +427,7 @@ void apagarPalavra() {
     cont--;
 
     // Reescreve o arquivo com as palavras restantes
-    file = fopen("palavras.bin", "wb");
+    file = fopen("palavras.dat", "wb");
     if (!file) {
         printf(" \n");
         printf("Erro ao abrir o arquivo para escrita!\n");
@@ -438,13 +438,13 @@ void apagarPalavra() {
         fwrite(palavras[i], sizeof(char), MIN_LETRAS, file);
     }
     fclose(file);
-    printf(" \n");
+
     printf("Palavra excluida com sucesso!\n");
 }
 
 void cadastrarPalavra() {
 
-    FILE *file = fopen("palavras.bin", "a+b");
+    FILE *file = fopen("palavras.dat", "a+b");
     if (!file) {
         printf(" \n");
         printf("Erro ao abrir o arquivo!\n");
@@ -452,7 +452,6 @@ void cadastrarPalavra() {
     }
 
     char nova_palavra[MIN_LETRAS];
-    printf(" \n");
     printf("Digite a nova palavra: ");
     fgets(nova_palavra, MIN_LETRAS, stdin);
     nova_palavra[strcspn(nova_palavra, "\n")] = 0;  // Remove o '\n' do final

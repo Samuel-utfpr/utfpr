@@ -5,7 +5,7 @@
 #include <ctype.h>
 
 #define MAX_PALAVRAS 50
-#define MIN_PALAVRAS 10  // Mínimo de palavras necessárias para iniciar o jogo
+#define MIN_PALAVRAS 10  
 #define MIN_LETRAS 20
 #define MAX_TENTA 6
 
@@ -27,7 +27,8 @@ int main() {
 void menu() {
     int opcao;
     do {
-        printf("\nMenu Inicial:\n");
+        printf(" \n");
+        printf("\n===== Menu Inicial: =====\n");
         printf("1. Novo Jogo\n");
         printf("2. Cadastrar Palavra\n");
         printf("3. Atualizar Palavra\n");
@@ -47,7 +48,7 @@ void menu() {
                 case 3: atualizarPalavra(); break;
                 case 4: apagarPalavra(); break;
                 case 5: mostrarPalavras(); break;
-                case 6: printf("Saindo...\n"); break;
+                case 6: printf("Saindo...\n"); exit(0);
                 default: printf("Opcao invalida!\n");
             }
         }
@@ -55,7 +56,7 @@ void menu() {
 }
 
 void novoJogo() {
-    FILE *file = fopen("palavras.dat", "rb");
+    FILE *file = fopen("palavras.bin", "rb");
     if (!file) {
         printf("Erro ao abrir o arquivo!\n");
         return;
@@ -65,13 +66,15 @@ void novoJogo() {
     int cont = 0;
     while (cont < MAX_PALAVRAS && fread(palavras[cont], sizeof(char), MIN_LETRAS, file)) {
         for (int i = 0; palavras[cont][i]; i++) {
-            palavras[cont][i] = tolower(palavras[cont][i]); // <--- Adicione este loop
+            palavras[cont][i] = tolower(palavras[cont][i]); 
+            
         }
         cont++;
     }
     fclose(file);
     
     if (cont < MIN_PALAVRAS) {  // Verifica se há pelo menos 10 palavras
+        printf(" \n");
         printf("Voce precisa cadastrar pelo menos %d palavras para iniciar o jogo!\n", MIN_PALAVRAS);
         printf("Palavras cadastradas atualmente: %d\n", cont);
         return;
@@ -161,33 +164,30 @@ void desenharForca(int tentativas) {
 }
 
 void jogar(char *palavra) {
-    int len = strlen(palavra);
+    int pp = strlen(palavra);
     char display[MIN_LETRAS];
     char usadas[26] = "";
     int tentativas = MAX_TENTA;
     int acertos = 0;
     int pontuacao = 0;
 
-    for (int i = 0; i < len; i++) {
+    for (int i = 0; i < pp; i++) {
         display[i] = '_';
     }
-    display[len] = '\0';
+    display[pp] = '\0';
 
-    while (tentativas > 0 && acertos < len) {
-        system("cls||clear");
-        printf("\n");
-        desenharForca(tentativas); // <----- ADICIONE ESTA LINHA
+    while (tentativas > 0 && acertos < pp) {
+        printf(" \n");
+        desenharForca(tentativas); 
         printf("\nPalavra: %s\n", display);
         printf("Letras usadas: %s\n", usadas);
         printf("Tentativas restantes: %d\n", tentativas);
         printf("Pontuacao: %d\n", pontuacao);
-
-        // Resto do código permanece igual...
         printf("Digite uma letra: ");
         char tentativa;
         scanf(" %c", &tentativa);
         getchar();
-        tentativa = tolower(tentativa); // <--- Adicione esta linha
+        tentativa = tolower(tentativa); 
 
         if (strchr(usadas, tentativa)) {
             printf("Voce ja usou essa letra!\n");
@@ -195,8 +195,8 @@ void jogar(char *palavra) {
         else { // Só processa se a letra for nova
             strncat(usadas, &tentativa, 1);
             int encontrou = 0;
-            for (int i = 0; i < len; i++) {
-                if (tolower(palavra[i]) == tentativa) { // <--- Modifique esta linha
+            for (int i = 0; i < pp; i++) {
+                if (tolower(palavra[i]) == tentativa) {
                     display[i] = tentativa;
                     encontrou = 1;
                     acertos++;
@@ -211,8 +211,9 @@ void jogar(char *palavra) {
         }
     }
 
-    if (acertos == len) {
+    if (acertos == pp) {
         pontuacao += 50;  // Bônus por acertar a palavra completa
+        printf(" \n");
         printf("\nParabens! Voce acertou a palavra: %s\n", palavra);
     } else {
         printf("          ____\n");
@@ -230,8 +231,10 @@ void jogar(char *palavra) {
         printf("         ||  ||\n");
         printf("       __||  ||__\n");
         printf("      |___|  |___|\n");
+        printf(" \n");
         printf("\nFim de jogo! A palavra era: %s\n", palavra);
     }
+    printf("\n");
     printf("Pontuacao final: %d\n", pontuacao);  // Mostrar a pontuação final
 
     // Exibir o menu pós-jogo
@@ -241,7 +244,8 @@ void jogar(char *palavra) {
 void menuPosJogo() {
     int opcao;
     do {
-        printf("\nMenu Pos-Jogo:\n");
+        printf(" \n");
+        printf("\n===== Menu Pos-Jogo: =====\n");
         printf("1. Novo Jogo\n");
         printf("2. Menu Inicial\n");
         printf("3. Sair\n");
@@ -265,7 +269,7 @@ void menuPosJogo() {
 
 void atualizarPalavra() {
 
-    FILE *file = fopen("palavras.dat", "rb");
+    FILE *file = fopen("palavras.bin", "rb");
     if (!file) {
         printf("Erro ao abrir o arquivo!\n");
         return;
@@ -278,24 +282,26 @@ void atualizarPalavra() {
     while (cont < MAX_PALAVRAS && fread(palavras[cont], sizeof(char), MIN_LETRAS, file)) {
         cont++;
         for (int i = 0; palavras[cont][i]; i++) {
-            palavras[cont][i] = tolower(palavras[cont][i]); // <--- Adicione este loop
+            palavras[cont][i] = tolower(palavras[cont][i]); 
         }
     }
     fclose(file);
 
+    //Valida se possui palavras cadastradas
     if (cont == 0) {
+        printf(" \n");
         printf("Nenhuma palavra cadastrada!\n");
         return;
     }
 
-    // Mostrar as palavras cadastradas
+    // Mostra as palavras cadastradas
     printf("\n");
     printf("Palavras cadastradas:\n");
     for (int i = 0; i < cont; i++) {
         printf("%d. %s\n", i + 1, palavras[i]);
     }
 
-    // Solicitar ao usuário qual palavra deseja excluir
+    // Solicita ao usuário qual palavra deseja Atualizar
     int escolha;
     printf("\n");
     printf("Escolha o numero da palavra que deseja atualizar: ");
@@ -303,24 +309,24 @@ void atualizarPalavra() {
         printf("Escolha invalida!\n");
         return;
     }
-    getchar(); // Limpar o buffer do teclado
+    getchar();
 
-
+    //Solicita para o usuario a nova palavra
     char nova_palavra[MIN_LETRAS];
     printf("\n");
     printf("Digite a nova palavra: ");
     fgets(nova_palavra, MIN_LETRAS, stdin);
     nova_palavra[strcspn(nova_palavra, "\n")] = 0;
     for (int i = 0; nova_palavra[i]; i++) {
-        nova_palavra[i] = tolower(nova_palavra[i]); // <--- Adicione este loop
+        nova_palavra[i] = tolower(nova_palavra[i]); 
     }
-    file = fopen("palavras.dat", "rb");
+    file = fopen("palavras.bin", "rb");
     if (!file) {
         printf("Erro ao abrir o arquivo!\n");
         return;
     }
 
-    // Verificar se a palavra já existe
+    // Verifica se a palavra já existe
     char palavra_existente[MIN_LETRAS];
     int palavra_ja_existe = 0;
     while (fread(palavra_existente, sizeof(char), MIN_LETRAS, file)) {
@@ -331,6 +337,7 @@ void atualizarPalavra() {
     }
 
     if (palavra_ja_existe) {
+        printf(" \n");
         printf("Essa palavra ja foi cadastrada!\n");
         fclose(file);
         return;
@@ -339,9 +346,10 @@ void atualizarPalavra() {
 
     strcpy(palavras[escolha - 1], nova_palavra);
 
-    // Reescrever o arquivo com as palavras restantes
-    file = fopen("palavras.dat", "wb");
+    // Reescreve o arquivo com a nova palavra
+    file = fopen("palavras.bin", "wb");
     if (!file) {
+        printf(" \n");
         printf("Erro ao abrir o arquivo para escrita!\n");
         return;
     }
@@ -351,17 +359,19 @@ void atualizarPalavra() {
     }
     fclose(file);
 
+    printf("\n");
     printf("Palavra atualizada com sucesso!\n");
 }
 
 void mostrarPalavras() {
-    FILE *file = fopen("palavras.dat", "rb");
+    FILE *file = fopen("palavras.bin", "rb");
     if (!file) {
         printf("Erro ao abrir o arquivo!\n");
         return;
     }
     
     char palavra[MIN_LETRAS];
+    printf("\n");
     printf("Palavras cadastradas:\n");
     while (fread(palavra, sizeof(char), MIN_LETRAS, file)) {
         printf("%s\n", palavra);
@@ -370,7 +380,7 @@ void mostrarPalavras() {
 }
 
 void apagarPalavra() {
-    FILE *file = fopen("palavras.dat", "rb");
+    FILE *file = fopen("palavras.bin", "rb");
     if (!file) {
         printf("Erro ao abrir o arquivo!\n");
         return;
@@ -383,7 +393,7 @@ void apagarPalavra() {
     while (cont < MAX_PALAVRAS && fread(palavras[cont], sizeof(char), MIN_LETRAS, file)) {
         cont++;
         for (int i = 0; palavras[cont][i]; i++) {
-            palavras[cont][i] = tolower(palavras[cont][i]); // <--- Adicione este loop
+            palavras[cont][i] = tolower(palavras[cont][i]); 
         }
     }
     fclose(file);
@@ -393,7 +403,7 @@ void apagarPalavra() {
         return;
     }
 
-    // Mostrar as palavras cadastradas
+    // Mostra as palavras cadastradas
     printf("Palavras cadastradas:\n");
     for (int i = 0; i < cont; i++) {
         printf("%d. %s\n", i + 1, palavras[i]);
@@ -401,22 +411,25 @@ void apagarPalavra() {
 
     // Solicitar ao usuário qual palavra deseja excluir
     int escolha;
+    printf("\n");
     printf("Escolha o numero da palavra que deseja excluir: ");
     if (scanf("%d", &escolha) != 1 || escolha < 1 || escolha > cont) {
+        printf(" \n");
         printf("Escolha invalida!\n");
         return;
     }
-    getchar(); // Limpar o buffer do teclado
+    getchar(); 
 
-    // Remover a palavra escolhida
+    // Remove a palavra escolhida
     for (int i = escolha - 1; i < cont - 1; i++) {
         strcpy(palavras[i], palavras[i + 1]);
     }
     cont--;
 
-    // Reescrever o arquivo com as palavras restantes
-    file = fopen("palavras.dat", "wb");
+    // Reescreve o arquivo com as palavras restantes
+    file = fopen("palavras.bin", "wb");
     if (!file) {
+        printf(" \n");
         printf("Erro ao abrir o arquivo para escrita!\n");
         return;
     }
@@ -425,28 +438,31 @@ void apagarPalavra() {
         fwrite(palavras[i], sizeof(char), MIN_LETRAS, file);
     }
     fclose(file);
-
+    printf(" \n");
     printf("Palavra excluida com sucesso!\n");
 }
 
 void cadastrarPalavra() {
 
-    FILE *file = fopen("palavras.dat", "a+b");
+    FILE *file = fopen("palavras.bin", "a+b");
     if (!file) {
+        printf(" \n");
         printf("Erro ao abrir o arquivo!\n");
         return;
     }
 
     char nova_palavra[MIN_LETRAS];
+    printf(" \n");
     printf("Digite a nova palavra: ");
     fgets(nova_palavra, MIN_LETRAS, stdin);
     nova_palavra[strcspn(nova_palavra, "\n")] = 0;  // Remove o '\n' do final
 
     for (int i = 0; nova_palavra[i]; i++) {
-        nova_palavra[i] = tolower(nova_palavra[i]); // <--- Adicione este loop
+        nova_palavra[i] = tolower(nova_palavra[i]); 
     }
 
     if (strlen(nova_palavra) < 5) {
+        printf(" \n");
         printf("A palavra deve ter no minimo 5 letras!\n");
         fclose(file);
         return;
@@ -463,6 +479,7 @@ void cadastrarPalavra() {
     }
 
     if (palavra_ja_existe) {
+        printf(" \n");
         printf("Essa palavra ja foi cadastrada!\n");
         fclose(file);
         return;
@@ -471,6 +488,7 @@ void cadastrarPalavra() {
     // Se a palavra não existe, cadastrá-la
     fseek(file, 0, SEEK_END);  // Posiciona o cursor no final do arquivo
     fwrite(nova_palavra, sizeof(char), MIN_LETRAS, file);
+    printf("\n");
     printf("Palavra cadastrada com sucesso!\n");
     fclose(file);
 }
