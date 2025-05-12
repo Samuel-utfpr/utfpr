@@ -1,15 +1,17 @@
 public class Financeiro {
-    Lancamento lancamentos[];
+    private double saldo = 0.0;
     public void processarLancamento(Lancamento lancamento){
-        for(int i = 0; i < lancamentos.length; i++){
-            if(lancamento.getTipo() == 'Receber'){
-                System.out.println("Lançamento de crédito: " + lancamento.getValor());
-            } else if(lancamento.getTipo() == 'Pagar'){
-                System.out.println("Lançamento de débito: " + lancamento.getValor());
+            if(lancamento.getTipo() == 0){
+                saldo -= lancamento.getValor();
+                System.out.printf("Lançamento: Pagar - %s - %.2f%n", lancamento.getDescricao(), lancamento.getValor());
             } else {
-                System.out.println("Tipo de lançamento inválido");
+                saldo += lancamento.getValor();
+                System.out.printf("Lançamento: Receber - %s - %.2f%n", lancamento.getDescricao(), lancamento.getValor());
             }
-        }
+    }
+
+    public void printSaldo(){
+        System.out.printf("Saldo = %.2f%n", saldo);
     }
     
 }
