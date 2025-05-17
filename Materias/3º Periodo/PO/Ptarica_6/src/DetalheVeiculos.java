@@ -8,9 +8,10 @@ public class DetalheVeiculos  {
     public void printVeiculos(){
         for (Veiculo veiculo : veiculos){
             if(veiculo instanceof Carro){
-                System.out.printf("Carro: %s - %s - %d", veiculo.getPlaca(), veiculo.getCor(), ((Carro) veiculo).getRodas());
+                System.out.printf("Carro: %s - %s - %d \n", veiculo.getPlaca(), veiculo.getCor(), ((Carro) veiculo).getRodas());
             }else if(veiculo instanceof Moto){
-                System.out.printf("Moto: %s - %s - %d", veiculo.getPlaca(), veiculo.getCor(), ((Moto) veiculo).getRodas());
+                System.out.printf("Moto: %s - %s - %d \n", veiculo.getPlaca(), veiculo.getCor(), ((Moto) veiculo).getRodas());
+            }
         }
     }
 }
