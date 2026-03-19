@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Revisão Completa de Sistemas Operacionais</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Seu CSS (conforme você passou). -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="main-container">
+    <button id="menu-toggle" class="mobile-menu-toggle" aria-label="Abrir menu">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
+    </button>
+
+    <aside id="sidebar" class="sidebar">
+      <h1 class="sidebar-header">Sistemas Operacionais</h1>
+      <nav id="table-of-contents" class="table-of-contents"></nav>
+    </aside>
+
+    <main class="main-content">
+      <div class="content-card">
+        <article class="prose">
+
+          <section id="capitulo-1" data-title="Capítulo 1: Introdução aos Sistemas Operacionais">
+            <h1>Capítulo 1: Introdução aos Sistemas Operacionais</h1>
+              <div id="section-1-1" data-title="1.1. O que é um Sistema Operacional?">
+                <h2>1.1. O que é um Sistema Operacional?</h2>
+                <p>Um Sistema Operacional (SO) pode ser definido como uma camada de software intermediária que se posiciona entre o hardware físico do computador e os programas aplicativos utilizados pelo usuário. Ele funciona como um grande gerente de recursos e um facilitador, cuja principal função é tornar o computador mais fácil de usar, além de gerenciar todos os seus recursos de forma eficiente, justa e segura.</p>
+                <p>A estrutura de um SO é inerentemente complexa. Em seu nível mais baixo, encontramos os <strong>drivers</strong>, que são softwares especializados em traduzir comandos genéricos (como "ler dados") em sinais elétricos específicos que um determinado dispositivo de hardware (uma placa de rede, um disco rígido) consegue entender. Em seu nível mais alto, temos os <strong>utilitários</strong> (como formatadores de disco, gerenciadores de arquivos) e a <strong>interface gráfica (GUI)</strong>, que é a camada com a qual o usuário interage diretamente.</p>
+                <blockquote>[Imagem de um diagrama mostrando o SO entre o hardware e os aplicativos]</blockquote>
+                <p>O SO atua como uma ponte que abstrai a complexidade. Quando um usuário utiliza um editor de textos e salva um documento, ele não precisa se preocupar em como os bits e bytes daquele texto são fisicamente organizados e gravados nos setores de um disco magnético ou nas células de memória de um SSD. O SO lida com toda essa complexidade, oferecendo ao usuário e ao aplicativo uma interface muito mais simples e intuitiva: o conceito de "arquivo".</p>
+              </div>
+              <div id="section-1-2" data-title="1.2. Funções Essenciais: Abstração e Gerência de Recursos">
+                <h2>1.2. Funções Essenciais: Abstração e Gerência de Recursos</h2>
+                <p>As duas funcionalidades primordiais de um sistema operacional são:</p>
+                <ul>
+                  <li><strong>Abstração de Recursos:</strong> O SO esconde os detalhes e a complexidade do hardware, provendo aos aplicativos interfaces de alto nível, simples e homogêneas. Um desenvolvedor de software não precisa escrever um código específico para cada modelo de placa de som ou tipo de impressora existente. Ele simplesmente usa a API (Application Programming Interface) do SO para "tocar um som" ou "imprimir um documento". O SO, através de seus drivers, se encarrega de traduzir essa requisição para o hardware específico presente na máquina. Isso torna os aplicativos independentes do hardware.</li>
+                  <li><strong>Gerência de Recursos:</strong> O SO gerencia e coordena o uso de todos os recursos do computador — a Unidade Central de Processamento (CPU), a memória RAM, os dispositivos de Entrada/Saída (E/S) — pelos diversos programas que estão em execução. Isso inclui:
+                    <ul>
+                      <li><strong>Compartilhamento do Processador:</strong> Em um sistema moderno, múltiplos programas parecem rodar ao mesmo tempo. O SO é quem orquestra essa ilusão, dividindo o tempo do processador entre os diversos programas de forma tão rápida que o usuário tem a impressão de que eles executam em paralelo.</li>
+                      <li><strong>Acesso Sequenciado:</strong> Para recursos que, por sua natureza, não podem ser usados por mais de um programa ao mesmo tempo (como uma impressora), o SO cria uma fila (spool) e garante que os trabalhos sejam executados um de cada vez, de forma ordenada.</li>
+                      <li><strong>Proteção:</strong> Uma das funções mais críticas do SO é proteger os recursos. Ele impede que um programa mal-comportado ou com falhas acesse a área de memória de outro programa, o que poderia corromper seus dados e causar instabilidade. Ele também evita que um único programa monopolize todos os recursos (um ataque de negação de serviço), garantindo a estabilidade e a segurança do sistema como um todo.</li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+              <div id="section-1-3" data-title="1.3. Áreas de Gerência">
+                <h2>1.3. Áreas de Gerência</h2>
+                <p>A gerência de recursos se desdobra em várias áreas específicas:</p>
+                <ul>
+                  <li><strong>Gerência do Processador:</strong> Decide qual programa (processo) deve usar a CPU, em que momento e por quanto tempo. Essa tarefa é realizada por um componente chamado escalonador de processos.</li>
+                  <li><strong>Gerência de Memória:</strong> Aloca porções da memória principal (RAM) para os processos em execução e garante que cada um permaneça em sua área designada, criando espaços de memória isolados e protegidos.</li>
+                  <li><strong>Gerência de Dispositivos:</strong> Configura e controla o acesso a todos os periféricos, como teclado, mouse, monitores, discos e impressoras, através dos drivers.</li>
+                  <li><strong>Gerência de Arquivos:</strong> Organiza os dados em disco, criando e mantendo a estrutura de arquivos e diretórios, e controla as permissões de acesso a esses dados.</li>
+                  <li><strong>Gerência de Proteção:</strong> Define e implementa regras de acesso aos recursos, determinando quem pode fazer o quê (por exemplo, quais usuários podem ler ou modificar um arquivo).</li>
+                </ul>
+              </div>
+              <div id="section-1-4" data-title="1.4. Tipos de Sistemas Operacionais">
+                <h2>1.4. Tipos de Sistemas Operacionais</h2>
+                <p>Os sistemas operacionais são categorizados conforme sua aplicação e arquitetura:</p>
+                <ul>
+                  <li><strong>Sistemas em Batch:</strong> Os primeiros sistemas operacionais. Executavam "lotes" de tarefas (jobs) sequencialmente, sem qualquer interação com o usuário durante o processamento. Eram comuns em mainframes para processar folhas de pagamento, transações bancárias, etc.</li>
+                  <li><strong>Sistemas Multiusuário:</strong> Permitem que múltiplos usuários acessem os recursos do computador simultaneamente. O SO é responsável por gerenciar as permissões, garantindo que um usuário não interfira no trabalho do outro (ex: Linux, Windows Server).</li>
+                  <li><strong>Sistemas de Desktop:</strong> O tipo mais comum para computadores pessoais. São focados na interatividade com um único usuário, com forte suporte a interfaces gráficas amigáveis (ex: Windows 11, macOS, distribuições Linux como o Ubuntu).</li>
+                  <li><strong>Sistemas Móveis:</strong> Otimizados para dispositivos portáteis como smartphones e tablets. Possuem características específicas como gerenciamento agressivo de energia, foco em conectividade (Wi-Fi, 4G/5G) e integração com sensores (GPS, acelerômetro) (ex: Android, iOS).</li>
+                  <li><strong>Sistemas Embarcados (Embarcados):</strong> Projetados para funcionar em hardware específico e com recursos limitados (pouca memória, processador menos potente). Estão presentes em inúmeros dispositivos do dia a dia, como em micro-ondas, sistemas de injeção eletrônica de carros, smart TVs, etc.</li>
+                  <li><strong>Sistemas de Tempo Real (Real-Time):</strong> Sistemas onde o tempo de resposta a um evento não é apenas uma questão de desempenho, mas de correção. São cruciais em sistemas críticos.
+                    <ul>
+                      <li><strong>Hard Real-Time:</strong> Atrasos na resposta não são tolerados sob nenhuma circunstância, pois podem levar a falhas catastróficas (ex: sistemas de freios ABS de um carro, controle de voo de um avião, reatores nucleares).</li>
+                      <li><strong>Soft Real-Time:</strong> Atrasos são tolerados, embora não sejam desejados, pois degradam a qualidade do serviço, mas não causam uma falha crítica (ex: sistemas de streaming de vídeo, onde um atraso pode causar um "engasgo" na imagem, ou transações bancárias online).</li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+              <div id="section-1-5" data-title="1.5. Breve Histórico dos Sistemas Operacionais">
+                <h2>1.5. Breve Histórico dos Sistemas Operacionais</h2>
+                <ul>
+                  <li><strong>Anos 40-50:</strong> A computação era "nua". Programas eram inseridos diretamente no hardware e executavam sozinhos. Com o tempo, surgiram as "bibliotecas de sistema" para reutilizar código de operações comuns de E/S.</li>
+                  <li><strong>Anos 60:</strong> A revolução do <strong>time-sharing</strong> (tempo compartilhado). Sistemas como o <strong>CTSS</strong> e o ambicioso <strong>Multics</strong> permitiram que múltiplos usuários interagissem com um único e caro computador mainframe simultaneamente. No final da década, frustrados com a complexidade do Multics, Ken Thompson e Dennis Ritchie, da Bell Labs, criaram uma versão mais simples e elegante: o <strong>UNIX</strong>.</li>
+                  <li><strong>Anos 80:</strong> A era dos computadores pessoais (PCs). A Microsoft lança o <strong>MS-DOS</strong> (1981), que dominou o mercado de PCs da IBM. A Apple lança o <strong>Mac OS 1.0</strong> (1984) com o Macintosh, popularizando a interface gráfica do usuário (GUI) e o mouse. A Microsoft segue o caminho com o <strong>Windows 1.0</strong> (1985).</li>
+                  <li><strong>Anos 90:</strong> Em 1991, um estudante finlandês chamado Linus Torvalds lança a primeira versão do kernel <strong>Linux</strong>. Combinado com as ferramentas do projeto GNU, o Linux se torna um sistema operacional completo, livre e de código aberto, que viria a dominar o mundo dos servidores. A Microsoft lança o <strong>Windows NT</strong> (1993), uma base de 32 bits muito mais robusta e segura que serviria de alicerce para todas as versões futuras do Windows.</li>
+                  <li><strong>Anos 2000-Hoje:</strong> A era da mobilidade e da nuvem. A Apple redefine o mercado com o <strong>iOS</strong> (originalmente iPhone OS) em 2007. No mesmo ano, o Google lança o <strong>Android</strong>, baseado no kernel Linux, que se torna o sistema operacional móvel mais popular do mundo. A virtualização (com softwares como VMWare) e a computação em nuvem se tornam tecnologias predominantes.</li>
+                </ul>
+              </div>
+              <div id="section-1-6" data-title="1.6. Estrutura de um Sistema Operacional">
+                <h2>1.6. Estrutura de um Sistema Operacional</h2>
+                <p>A forma como os componentes de um SO são organizados define sua arquitetura.</p>
+                <ul>
+                  <li><strong>Núcleo (Kernel):</strong> O coração do SO. É o software que executa em modo privilegiado (nível núcleo), tendo acesso direto ao hardware. É responsável pela gerência de processos, memória e dispositivos.</li>
+                  <li><strong>Drivers:</strong> Módulos de software que atuam como tradutores, permitindo que o núcleo se comunique com os mais variados dispositivos de hardware.</li>
+                  <li><strong>Utilitários e Aplicativos:</strong> Todos os outros programas, que rodam em "modo usuário" e interagem com o hardware através dos serviços (syscalls) oferecidos pelo núcleo.</li>
+                </ul>
+                <p>As principais filosofias de arquitetura para o núcleo são:</p>
+                <ul>
+                  <li><strong>Sistemas Monolíticos:</strong> Todo o núcleo (gerência de processos, memória, sistema de arquivos, drivers de dispositivo, protocolos de rede) é compilado e executado como um único e grande programa em modo privilegiado. Vantagens: O desempenho é muito alto. Desvantagens: É uma arquitetura complexa de manter e depurar, e uma falha em um componente pode comprometer a estabilidade de todo o sistema. Exemplos: Linux, MS-DOS.</li>
+                  <li><strong>Sistemas Micronúcleo (Microkernel):</strong> A filosofia aqui é manter o núcleo o menor e mais simples possível, com outros serviços rodando como processos separados em modo usuário. Vantagens: Maior estabilidade e modularidade. Desvantagens: O desempenho é consideravelmente inferior devido à sobrecarga de comunicação. Exemplo: Minix 3.</li>
+                  <li><strong>Sistemas Híbridos:</strong> Tentam obter o melhor dos dois mundos. A maioria dos sistemas operacionais modernos, como Windows, macOS e até mesmo o Linux, são considerados híbridos.</li>
+                </ul>
+              </div>
+              <div id="section-1-7" data-title="1.7. Hardware Essencial e Níveis de Privilégio">
+                <h2>1.7. Hardware Essencial e Níveis de Privilégio</h2>
+                <p>Para que um SO possa gerenciar e proteger os recursos de forma eficaz, o hardware da CPU precisa oferecer suporte a, no mínimo, dois modos de operação, conhecidos como <strong>níveis de privilégio</strong>:</p>
+                <ul>
+                  <li><strong>Nível Núcleo (Kernel Mode, Supervisor Mode, Ring 0):</strong> Neste modo, o software tem acesso total e irrestrito a todos os recursos do hardware. Ele pode executar qualquer instrução da CPU, acessar qualquer registrador e qualquer endereço de memória. Apenas o núcleo do SO e seus drivers rodam neste nível de altíssimo privilégio.</li>
+                  <li><strong>Nível Usuário (User Mode, User-space):</strong> Neste modo, o acesso aos recursos é rigidamente controlado e restrito pelo hardware. Um programa em modo usuário não pode executar instruções sensíveis (como desabilitar interrupções), não pode acessar diretamente dispositivos de hardware e não pode acessar áreas de memória que não lhe pertençam. Qualquer tentativa de realizar uma operação ilegal gera uma "exceção" de hardware, que força uma transição imediata para o modo núcleo, devolvendo o controle ao SO para que ele possa lidar com a infração (geralmente, finalizando o programa ofensor). Todos os aplicativos e utilitários rodam neste nível.</li>
+                </ul>
+                <p>Essa separação é a base da proteção em sistemas operacionais modernos e é crucial para garantir a estabilidade do sistema.</p>
+              </div>
+              <div id="section-1-8" data-title="1.8. Chamadas de Sistema (Syscalls)">
+                <h2>1.8. Chamadas de Sistema (Syscalls)</h2>
+                <p>Se um programa em nível de usuário tem acesso restrito, como ele pode realizar tarefas úteis como abrir um arquivo, alocar memória ou enviar dados pela rede, que exigem acesso a recursos controlados pelo núcleo? A resposta é através das <strong>chamadas de sistema (syscalls)</strong>.</p>
+                <p>Uma syscall é o mecanismo formal e controlado através do qual um programa em modo usuário pode solicitar um serviço ao núcleo do SO. É a única "porta de entrada" legal para o modo núcleo. O processo funciona da seguinte forma:</p>
+                <ol>
+                  <li>A aplicação chama uma função de uma biblioteca padrão (como <code>write()</code> da <code>libc</code>).</li>
+                  <li>Essa função de biblioteca prepara os parâmetros para a chamada de sistema, colocando-os em registradores específicos da CPU (ex: o número da syscall no registrador <code>rax</code>).</li>
+                  <li>A biblioteca então executa uma instrução especial de <strong>trap</strong> (como a instrução <code>syscall</code> em processadores x86-64).</li>
+                  <li>Essa instrução causa uma interrupção de software, que muda a CPU do modo usuário para o modo núcleo e transfere o controle para uma rotina de tratamento de syscalls do SO.</li>
+                  <li>A rotina do núcleo executa a operação solicitada (ex: <code>sys_write</code>).</li>
+                  <li>Após a conclusão, o núcleo coloca o valor de retorno em um registrador, executa uma instrução de retorno de interrupção (como <code>sysexit</code>), que faz a CPU voltar para o modo usuário, e devolve o controle à função da biblioteca.</li>
+                  <li>A função da biblioteca retorna o resultado para a aplicação.</li>
+                </ol>
+                <p>Esse mecanismo garante que, embora o núcleo execute tarefas em nome do usuário, ele mantém o controle total sobre o sistema.</p>
+              </div>
+          </section>
+
+          <section id="capitulo-2" data-title="Capítulo 2: Processos e Escalonamento">
+            <h1>Capítulo 2: Processos e Escalonamento</h1>
+              <div id="section-2-1" data-title="2.1. O Conceito de Processo">
+                <h2>2.1. O Conceito de Processo</h2>
+                <p>O conceito de <strong>processo</strong> é um dos pilares de qualquer sistema operacional moderno. Um processo é, de forma simples, <strong>um programa em execução</strong>. É importante distinguir entre "programa" e "processo":</p>
+                <ul>
+                  <li>Um <strong>programa</strong> é uma entidade estática e passiva, um conjunto de instruções e dados armazenado em um arquivo em disco (um executável).</li>
+                  <li>Um <strong>processo</strong> é uma entidade dinâmica e ativa, uma instância de um programa que está sendo executada. Ele tem um estado que muda ao longo do tempo.</li>
+                </ul>
+                <p>Cada processo possui seu próprio <strong>espaço de endereçamento virtual</strong>, que é sua visão privada e isolada da memória. Nele, o processo armazena seu código executável (segmento de texto), suas variáveis globais e estáticas (segmento de dados), sua pilha de chamadas de função (stack) e a área de alocação dinâmica (heap). Além disso, cada processo possui recursos associados, como arquivos abertos, e um <strong>conjunto de registradores</strong> da CPU, que representam seu contexto de execução imediato. Os mais importantes são:</p>
+                <ul>
+                  <li><strong>Contador de Programa (Program Counter - PC):</strong> Aponta para o endereço da próxima instrução a ser executada.</li>
+                  <li><strong>Ponteiro de Pilha (Stack Pointer - SP):</strong> Aponta para o topo da pilha do processo, usada for variáveis locais e chamadas de função.</li>
+                </ul>
+                <p>O SO utiliza o conceito de processo para gerenciar múltiplos programas em execução de forma concorrente, mesmo em uma máquina com uma única CPU. Essa técnica é chamada de <strong>multiprogramação</strong>. O SO alterna a execução entre os vários processos na memória, criando a ilusão de que eles estão rodando em paralelo, o que é conhecido como <strong>pseudoparalelismo</strong>.</p>
+                <blockquote>[Imagem de um diagrama mostrando a multiprogramação com 4 processos na memória]</blockquote>
+              </div>
+
+              <div id="section-2-2" data-title="2.2. Estados de um Processo e Transições">
+                <h2>2.2. Estados de um Processo e Transições</h2>
+                <p>Durante seu ciclo de vida, um processo transita por diferentes estados. O modelo mais simples e fundamental inclui três estados básicos:</p>
+                <ul>
+                  <li><strong>Executando (Running):</strong> O processo está, neste exato momento, utilizando a CPU para executar suas instruções. Em um sistema com um único núcleo de processamento, apenas um processo pode estar neste estado a qualquer instante.</li>
+                  <li><strong>Pronto (Ready):</strong> O processo tem tudo o que precisa para ser executado e está apto a rodar, mas está aguardando que o sistema operacional o selecione e lhe conceda tempo de CPU. Processos neste estado são mantidos em uma estrutura de dados chamada "fila de prontos".</li>
+                  <li><strong>Bloqueado (Blocked/Waiting):</strong> O processo não pode continuar sua execução, mesmo que a CPU estivesse disponível para ele. Isso ocorre porque ele está esperando por algum evento externo para acontecer. Exemplos comuns incluem esperar pela conclusão de uma operação de entrada/saída (E/S), esperar por um sinal de outro processo, ou esperar que um recurso (como um <code>lock</code>) seja liberado.</li>
+                </ul>
+                <blockquote>[Imagem do diagrama de 3 estados de processo (Executando, Pronto, Bloqueado)]</blockquote>
+                <p>As transições que governam o ciclo de vida de um processo são:</p>
+                <ol>
+                  <li><strong>Executando -> Bloqueado:</strong> Ocorre quando o processo inicia uma operação que não pode ser concluída imediatamente (ex: leitura de disco).</li>
+                  <li><strong>Pronto -> Executando:</strong> Ocorre quando o escalonador do SO seleciona este processo da fila de prontos para utilizar a CPU.</li>
+                  <li><strong>Executando -> Pronto:</strong> Ocorre em sistemas <strong>preemptivos</strong>. O "quantum" (fatia de tempo) do processo expira, e o escalonador força sua saída da CPU.</li>
+                  <li><strong>Bloqueado -> Pronto:</strong> Ocorre quando o evento pelo qual o processo estava esperando finalmente acontece (ex: a leitura de dados foi concluída).</li>
+                </ol>
+              </div>
+
+              <div id="section-2-3" data-title="2.3. Implementação de Processos: Tabela de Processos e BCP">
+                <h2>2.3. Implementação de Processos: Tabela de Processos e BCP</h2>
+                <p>Para gerenciar todos os processos ativos, o sistema operacional mantém uma estrutura de dados central, chamada <strong>Bloco de Controle de Processo (BCP)</strong>. O SO mantém uma <strong>Tabela de Processos</strong> que, essencialmente, é uma lista de ponteiros para os BCPs de todos os processos existentes.</p>
+                <p>O BCP é a "carteira de identidade" de um processo. Ele armazena todas as informações vitais que o SO precisa para gerenciar aquele processo, incluindo:</p>
+                <ul>
+                  <li><strong>Contexto de Hardware:</strong> Uma cópia de todos os registradores da CPU (PC, SP, etc.) no momento em que o processo foi interrompido.</li>
+                  <li><strong>Estado do Processo:</strong> O estado atual (Executando, Pronto ou Bloqueado).</li>
+                  <li><strong>Identificador do Processo (PID):</strong> Um número único que identifica o processo.</li>
+                  <li><strong>Informações de Escalonamento:</strong> A prioridade do processo, o quantum, etc.</li>
+                  <li><strong>Gerenciamento de Memória:</strong> Ponteiros para as tabelas de páginas que definem o espaço de endereçamento.</li>
+                  <li><strong>Informações de Arquivos e E/S:</strong> O diretório de trabalho atual, descritores de arquivos abertos.</li>
+                  <li><strong>Informações de Contabilidade:</strong> ID do usuário, ID do grupo, etc.</li>
+                </ul>
+              </div>
+
+              <div id="section-2-4" data-title="2.4. Mudança de Contexto">
+                <h2>2.4. Mudança de Contexto</h2>
+                <p>Quando o SO decide alternar a CPU de um processo (P1) para outro (P2), ele realiza uma operação chamada <strong>mudança de contexto</strong>. Este é um procedimento mecanicamente simples, mas com um custo de desempenho significativo:</p>
+                <ol>
+                  <li>O SO salva o contexto de hardware completo do processo P1 dentro do seu BCP na memória.</li>
+                  <li>O SO atualiza o estado de P1 em seu BCP (por exemplo, de Executando para Pronto).</li>
+                  <li>O escalonador é invocado para escolher o próximo processo a ser executado, digamos P2.</li>
+                  <li>O SO carrega o contexto de hardware do processo P2, que estava previamente salvo em seu BCP, para os registradores físicos da CPU.</li>
+                  <li>O SO atualiza o estado de P2 para Executando.</li>
+                  <li>A execução do processo P2 é retomada do ponto onde havia parado.</li>
+                </ol>
+                <p>A mudança de contexto é um <strong>overhead</strong>, um tempo em que a CPU não está executando trabalho útil para nenhuma aplicação, apenas trabalho administrativo para o SO.</p>
+              </div>
+
+              <div id="section-2-5" data-title="2.5. Escalonamento de Processos: Conceitos e Objetivos">
+                <h2>2.5. Escalonamento de Processos: Conceitos e Objetivos</h2>
+                <p>O <strong>escalonador (scheduler)</strong> é o coração da gerência de processos. É o algoritmo que decide qual processo na fila de prontos será o próximo a receber a CPU. Os objetivos do escalonamento são muitas vezes conflitantes e dependem do tipo de sistema:</p>
+                <ul>
+                  <li><strong>Para todos os sistemas:</strong> Justiça (Fairness) e Eficiência (Efficiency).</li>
+                  <li><strong>Para sistemas em Batch:</strong> Vazão (Throughput) e Tempo de Turnaround.</li>
+                  <li><strong>Para sistemas Interativos:</strong> Tempo de Resposta.</li>
+                  <li><strong>Para sistemas de Tempo Real:</strong> Cumprimento de Prazos (Deadlines).</li>
+                </ul>
+                <p>Os algoritmos de escalonamento podem ser de dois tipos principais: <strong>Não-preemptivos</strong> (um processo só libera a CPU voluntariamente) ou <strong>Preemptivos</strong> (o SO pode forçar a retirada da CPU). A maioria dos sistemas interativos modernos é preemptiva.</p>
+              </div>
+
+              <div id="section-2-6" data-title="2.6. Algoritmos de Escalonamento para Sistemas em Batch">
+                <h2>2.6. Algoritmos de Escalonamento para Sistemas em Batch</h2>
+                <ul>
+                  <li><strong>First-Come, First-Served (FCFS ou FIFO):</strong> Simplesmente uma fila. É um algoritmo não-preemptivo. Vantagens: simples. Desvantagens: pode ser muito ineficiente e injusto se um processo longo chegar primeiro (o "efeito comboio").</li>
+                  <li><strong>Shortest Job First (SJF):</strong> O escalonador seleciona o processo com o menor tempo de execução estimado. É não-preemptivo. Vantagens: comprovadamente ótimo para minimizar o tempo médio de espera. Desvantagens: impossível saber de antemão qual será o tempo de execução de um processo e pode levar à inanição (starvation).</li>
+                  <li><strong>Shortest Remaining Time Next (SRTN):</strong> É a versão preemptiva do SJF. O escalonador sempre escolhe o processo que tem o menor tempo restante de execução. Vantagens: excelente tempo de resposta para processos curtos. Desvantagens: sofre dos mesmos problemas do SJF mais o overhead de mudanças de contexto.</li>
+                </ul>
+              </div>
+
+              <div id="section-2-7" data-title="2.7. Algoritmos de Escalonamento para Sistemas Interativos">
+                <h2>2.7. Algoritmos de Escalonamento para Sistemas Interativos</h2>
+                <ul>
+                  <li><strong>Round-Robin (RR):</strong> Um dos algoritmos mais simples, justos e amplamente utilizados. O escalonador mantém uma fila de processos prontos. Cada processo recebe uma pequena fatia de tempo da CPU, chamada <strong>quantum</strong>. Se o processo não terminar ou se bloquear, ele é movido para o final da fila. O desempenho é muito sensível ao tamanho do quantum.</li>
+                  <li><strong>Escalonamento por Prioridades:</strong> Cada processo tem uma prioridade. O escalonador sempre escolhe o processo pronto com a maior prioridade. Pode ser preemptivo. O principal problema é a inanição de processos de baixa prioridade. Uma solução comum é o <strong>envelhecimento (aging)</strong>, onde a prioridade aumenta com o tempo de espera.</li>
+                  <li><strong>Múltiplas Filas (Multiple Queues):</strong> O sistema mantém várias filas de prontos, geralmente associadas a diferentes classes de prioridade (ex: uma fila para processos interativos com RR, e outra para processos em batch com FCFS). É um sistema muito flexível.</li>
+                </ul>
+              </div>
+
+              <div id="section-2-8" data-title="2.8. Algoritmos de Escalonamento para Sistemas de Tempo Real">
+                <h2>2.8. Algoritmos de Escalonamento para Sistemas de Tempo Real</h2>
+                <p>O escalonamento em sistemas de tempo real é totalmente dominado pela necessidade de cumprir prazos (deadlines). Atrasar uma resposta é considerado uma falha.</p>
+                <ul>
+                  <li><strong>Estático:</strong> As decisões de escalonamento são feitas offline, antes de o sistema rodar. Só é viável se todas as tarefas e seus prazos forem conhecidos de antemão.</li>
+                  <li><strong>Dinâmico:</strong> As decisões são tomadas em tempo de execução (online).</li>
+                </ul>
+                <p>Algoritmos comuns incluem <strong>Rate Monotonic Scheduling (RMS)</strong> e <strong>Earliest Deadline First (EDF)</strong>.</p>
+              </div>
+          </section>
+
+          <section id="capitulo-3" data-title="Capítulo 3: Threads">
+            <h1>Capítulo 3: Threads</h1>
+              <div id="section-3-1" data-title="3.1. Do Processo Pesado à Thread Leve">
+                <h2>3.1. Do Processo Pesado à Thread Leve</h2>
+                <p>Um processo tradicional é considerado uma unidade "pesada" de execução, pois agrupa duas responsabilidades distintas: o <strong>agrupamento de Recursos</strong> (espaço de endereçamento, arquivos abertos, etc.) e o <strong>fluxo de Execução</strong> (contador de programa, registradores, pilha).</p>
+                <p>Em muitas aplicações modernas, como um navegador web, é útil ter múltiplos fluxos de execução que operam sobre o mesmo conjunto de recursos. Criar um processo separado para cada tarefa seria ineficiente. A solução é a <strong>thread</strong>, também conhecida como <strong>processo leve (LWP)</strong>.</p>
+                <blockquote>[Imagem mostrando a diferença entre três processos e um processo com três threads]</blockquote>
+              </div>
+
+              <div id="section-3-2" data-title="3.2. O Modelo de Threads">
+                <h2>3.2. O Modelo de Threads</h2>
+                <p>Vamos detalhar o que é compartilhado e o que é privado:</p>
+                <h3>Itens por Processo (Compartilhados entre todas as suas Threads):</h3>
+                <ul>
+                  <li>Espaço de endereçamento (segmentos de código, dados e heap)</li>
+                  <li>Variáveis globais</li>
+                  <li>Arquivos abertos</li>
+                  <li>Processos filhos</li>
+                  <li>Alarmes e sinais</li>
+                </ul>
+                <h3>Itens por Thread (Privados e únicos para cada Thread):</h3>
+                <ul>
+                  <li>Contador de Programa (PC)</li>
+                  <li>Registradores</li>
+                  <li>Pilha (Stack)</li>
+                  <li>Estado (Executando, Pronto, Bloqueado)</li>
+                </ul>
+                <p>Como todas as threads de um processo compartilham o mesmo espaço de memória, a comunicação entre elas é trivial e extremamente rápida. No entanto, como não há proteção de memória entre as threads, uma pode facilmente corromper os dados de outra. Isso torna a <strong>sincronização</strong> um desafio central.</p>
+              </div>
+
+              <div id="section-3-3" data-title="3.3. Benefícios e Razões para usar Threads">
+                <h2>3.3. Benefícios e Razões para usar Threads</h2>
+                <ul>
+                  <li><strong>Capacidade de Resposta:</strong> Em uma aplicação com interface gráfica, a UI pode ser mantida por uma thread, que permanece responsiva, enquanto outras threads executam tarefas longas em segundo plano.</li>
+                  <li><strong>Compartilhamento de Recursos:</strong> A cooperação entre threads é muito mais eficiente do que a comunicação entre processos, pois elas compartilham memória e recursos por padrão.</li>
+                  <li><strong>Economia:</strong> Criar uma nova thread e realizar uma mudança de contexto entre threads do mesmo processo é muito mais "barato" (rápido) do que com processos.</li>
+                  <li><strong>Utilização de Arquiteturas Multiprocessador:</strong> Threads oferecem um caminho natural para o <strong>paralelismo real</strong> em sistemas multicore.</li>
+                </ul>
+              </div>
+
+              <div id="section-3-4" data-title="3.4. Threads em Arquiteturas Multicore e o Paralelismo Real">
+                <h2>3.4. Threads em Arquiteturas Multicore e o Paralelismo Real</h2>
+                <p>É crucial entender a diferença entre concorrência e paralelismo:</p>
+                <ul>
+                  <li><strong>Concorrência (Pseudoparalelismo):</strong> Em uma CPU de núcleo único, o SO alterna rapidamente entre as threads, dando a ilusão de que elas estão executando simultaneamente.</li>
+                  <li><strong>Paralelismo Real:</strong> Em uma CPU multicore, o SO pode despachar múltiplas threads para executar fisicamente ao mesmo tempo, cada uma em um núcleo diferente.</li>
+                </ul>
+              </div>
+
+              <div id="section-3-5" data-title="3.5. Tipos de Threads: Modo Usuário vs. Modo Kernel">
+                <h2>3.5. Tipos de Threads: Modo Usuário vs. Modo Kernel</h2>
+                <p>A implementação de threads pode ser feita no espaço do usuário ou diretamente no núcleo.</p>
+                <ul>
+                  <li><strong>Threads em Modo Usuário (User-Level Threads):</strong> Todo o gerenciamento é feito por uma biblioteca no espaço do usuário, sem o conhecimento do núcleo. São extremamente rápidas para criar e trocar de contexto. A principal desvantagem: se uma única thread fizer uma chamada de sistema bloqueante, o processo inteiro pode ser bloqueado.</li>
+                  <li><strong>Threads em Modo Kernel (Kernel-Level Threads):</strong> O núcleo do SO tem conhecimento direto e gerencia todas as threads. A criação e a troca de contexto são mais lentas, mas robustas a bloqueios e permitem paralelismo real.</li>
+                </ul>
+              </div>
+
+              <div id="section-3-6" data-title="3.6. Implementação e Desafios">
+                <h2>3.6. Implementação e Desafios</h2>
+                <p>Hoje em dia, a vasta maioria dos sistemas operacionais de propósito geral (Windows, Linux, macOS, Android e iOS) utiliza um modelo de <strong>threads em modo kernel</strong>. O grande desafio da programação multithread reside no gerenciamento do acesso concorrente a recursos compartilhados para evitar condições de corrida e deadlocks.</p>
+              </div>
+          </section>
+
+          <section id="capitulo-4" data-title="Capítulo 4: Comunicação e Sincronização Entre Processos">
+            <h1>Capítulo 4: Comunicação e Sincronização Entre Processos</h1>
+              <div id="section-4-1" data-title="4.1. A Necessidade de Comunicação e Cooperação">
+                <h2>4.1. A Necessidade de Comunicação e Cooperação</h2>
+                <p>Em qualquer sistema multiprogramado, os processos raramente operam em total isolamento. Frequentemente, eles precisam se comunicar, cooperar e competir por recursos. Essa interação levanta três questões fundamentais que o SO e o programador precisam resolver:</p>
+                <ul>
+                  <li><strong>Transferência de Informação:</strong> Como um processo pode passar informações para outro?</li>
+                  <li><strong>Exclusão Mútua:</strong> Como garantir que processos concorrentes não interfiram uns nos outros de maneira destrutiva ao acessar recursos compartilhados?</li>
+                  <li><strong>Sequenciamento:</strong> Como gerenciar dependências de ordem, onde um processo só pode prosseguir depois que outro atingiu um determinado ponto?</li>
+                </ul>
+              </div>
+
+              <div id="section-4-2" data-title="4.2. Condições de Corrida (Race Conditions)">
+                <h2>4.2. Condições de Corrida (Race Conditions)</h2>
+                <p>Uma <strong>condição de corrida (race condition)</strong> é uma situação anômala que ocorre quando dois ou mais processos (ou threads) manipulam um recurso compartilhado e o resultado final da operação depende da ordem particular em que seus acessos são intercalados pelo escalonador. O resultado se torna imprevisível e geralmente incorreto.</p>
+                <p>O exemplo clássico é o <strong>spooler de impressão</strong>. O cenário: um recurso compartilhado (uma variável <code>next_free_slot</code>) e dois processos (A e B) querendo imprimir. A sequência catastrófica se desenrola assim:</p>
+                <ol>
+                  <li>Processo A lê a variável <code>next_free_slot</code> e armazena o valor (ex: 7) em um registrador interno.</li>
+                  <li><strong>Preempção:</strong> O quantum de A expira. O SO salva o estado de A e escalona B.</li>
+                  <li>Processo B lê a mesma variável e segue; pode acabar escrevendo no mesmo slot e provocar sobrescrita.</li>
+                </ol>
+                <p>O resultado é um desastre: o trabalho de impressão do Processo B pode ser perdido. Este tipo de bug é notoriamente difícil de depurar.</p>
+              </div>
+
+              <div id="section-4-3" data-title="4.3. Regiões Críticas e o Requisito de Exclusão Mútua">
+                <h2>4.3. Regiões Críticas e o Requisito de Exclusão Mútua</h2>
+                <p>A parte do código de um programa onde um recurso compartilhado é acessado é chamada de <strong>região crítica</strong>. A solução é impor a <strong>exclusão mútua</strong>: garantir que, se um processo está executando em sua região crítica, nenhum outro processo concorrente possa entrar na sua região crítica (relativo ao mesmo recurso) ao mesmo tempo.</p>
+                <p>Uma boa solução deve satisfazer quatro condições: Segurança, Flexibilidade, Ausência de Bloqueio Desnecessário e Ausência de Inanição.</p>
+              </div>
+
+              <div id="section-4-4" data-title="4.4. Soluções de Exclusão Mútua com Espera Ocupada (Busy Waiting)">
+                <h2>4.4. Soluções de Exclusão Mútua com Espera Ocupada (Busy Waiting)</h2>
+                <p>As primeiras tentativas de solução envolviam espera ocupada, onde um processo fica em loop testando uma condição — isso consome ciclos de CPU.</p>
+                <ul>
+                  <li><strong>Desabilitar Interrupções:</strong> Funciona apenas em sistema unicore e é perigoso.</li>
+                  <li><strong>Variáveis de Travamento (Lock):</strong> Sofre de condição de corrida se a operação de teste+set não for atômica.</li>
+                  <li><strong>Instrução TSL (Test and Set Lock):</strong> Operação atômica no hardware que resolve a condição no lock, mas mantém espera ocupada.</li>
+                </ul>
+              </div>
+
+              <div id="section-4-5" data-title="4.5. Soluções sem Espera Ocupada: Primitivas Sleep e Wakeup">
+                <h2>4.5. Soluções sem Espera Ocupada: Primitivas Sleep e Wakeup</h2>
+                <p>Uma abordagem melhor é bloquear (sleep) processos que não podem prosseguir e acordá-los (wakeup) quando possível. Porém, uma implementação ingênua pode levar ao problema do "wakeup perdido" (ex: produtor acorda consumidor que ainda não dormiu).</p>
+              </div>
+
+              <div id="section-4-6" data-title="4.6. Semáforos: A Solução de Dijkstra">
+                <h2>4.6. Semáforos: A Solução de Dijkstra</h2>
+                <p>Proposto por Edsger Dijkstra em 1965, o <strong>semáforo</strong> é uma variável inteira protegida, projetada especificamente para resolver o problema do "wakeup perdido" e outros problemas de sincronização. Um semáforo armazena o número de "wakeups" para uso futuro. Ele suporta duas operações, que o hardware e o SO garantem que sejam <strong>atômicas</strong>:</p>
+                <h3>Tipos de Semáforos:</h3>
+                <ul>
+                  <li><strong>Mutex (Semáforo Binário):</strong> Inicializado com 1. Usado para exclusão mútua. O primeiro processo a executar <code>down</code> passa, definindo o valor para 0. Qualquer outro processo que tente um <code>down</code> será bloqueado até que o primeiro execute up.</li>
+                  <li><strong>Semáforo de Contagem:</strong> Inicializado com N, usado para controlar o acesso a um pool de N recursos.</li>
+                </ul>
+                <h3>Solução do Produtor-Consumidor com Semáforos:</h3>
+                <p>Utiliza três semáforos: <code>mutex</code>, <code>empty</code>, e <code>full</code>. Código (esquemático):</p>
+                <pre><code>// Código do Produtor:
+while(true) {
+  produzir_item();
+  down(&empty);      // Espera por um slot vazio. Decrementa contador de vazios.
+  down(&mutex);      // Entra na região crítica para acessar o buffer.
+  inserir_item();
+  up(&mutex);        // Sai da região crítica.
+  up(&full);         // Sinaliza que um slot cheio foi adicionado. Acorda um consumidor.
+}
+
+// Código do Consumidor:
+while(true) {
+  down(&full);       // Espera por um slot cheio. Decrementa contador de cheios.
+  down(&mutex);      // Entra na região crítica para acessar o buffer.
+  remover_item();
+  up(&mutex);        // Sai da região crítica.
+  up(&empty);        // Sinaliza que um slot vazio foi liberado. Acorda um produtor.
+  consumir_item();
+}</code></pre>
+                <p>Essa solução resolve tanto exclusão mútua quanto sincronização.</p>
+              </div>
+
+              <div id="section-4-7" data-title="4.7. Monitores: Sincronização de Alto Nível">
+                <h2>4.7. Monitores: Sincronização de Alto Nível</h2>
+                <p>Um <strong>monitor</strong> é uma construção de alto nível que encapsula exclusão mútua automaticamente e fornece variáveis de condição (<code>wait()</code>, <code>signal()</code>), presente em linguagens como Java e C#.</p>
+              </div>
+
+              <div id="section-4-8" data-title="4.8. Passagem de Mensagens para Sistemas Distribuídos">
+                <h2>4.8. Passagem de Mensagens para Sistemas Distribuídos</h2>
+                <p>Em sistemas distribuídos (sem memória compartilhada), a comunicação é feita por passagem de mensagens com primitivas <code>send(dest,&mensagem)</code> e <code>receive(rem,&mensagem)</code>. Introduz desafios como perda de mensagens, retransmissão e autenticação.</p>
+              </div>
+
+              <div id="section-4-9" data-title="4.9. Problemas Clássicos de Sincronização">
+                <h2>4.9. Problemas Clássicos de Sincronização</h2>
+                <p>Problemas teóricos canônicos:</p>
+                <ul>
+                  <li><strong>O Jantar dos Filósofos:</strong> Cinco filósofos, cinco garfos — projetar protocolo sem deadlock nem inanição.</li>
+                  <li><strong>Os Leitores e Escritores:</strong> Múltiplos leitores podem ler simultaneamente; apenas um escritor por vez.</li>
+                  <li><strong>O Barbeiro Dorminhoco:</strong> Modelo cliente-servidor com espera limitada (cadeiras de sala de espera).</li>
+                </ul>
+              </div>
+          </section>
+
+        </article>
+      </div>
+    </main>
+  </div>
+
+  <button id="back-to-top" class="back-to-top" aria-label="Voltar ao topo">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" /></svg>
+  </button>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const tocContainer = document.getElementById('table-of-contents');
+    const allSections = document.querySelectorAll('.prose section, .prose div[id^="section-"]');
+
+    // Generate TOC
+    let tocHTML = '<ul>';
+    document.querySelectorAll('.prose > section').forEach(section => {
+        tocHTML += `<li><a href="#${section.id}" class="sidebar-link">${section.dataset.title || section.querySelector('h1').innerText}</a>`;
+        const subsections = section.querySelectorAll('div[id^="section-"]');
+        if (subsections.length > 0) {
+            tocHTML += '<ul>';
+            subsections.forEach(sub => {
+                tocHTML += `<li><a href="#${sub.id}" class="sidebar-sublink">${sub.dataset.title || sub.querySelector('h2').innerText}</a></li>`;
+            });
+            tocHTML += '</ul>';
+        }
+        tocHTML += '</li>';
+    });
+    tocHTML += '</ul>';
+    tocContainer.innerHTML = tocHTML;
+
+    // Scroll spy
+    const allLinks = tocContainer.querySelectorAll('a');
+    const observer = new IntersectionObserver(entries => {
+        let mostVisibleLink = null;
+        let maxRatio = 0;
+
+        entries.forEach(entry => {
+            if (entry.isIntersecting && entry.intersectionRatio > maxRatio) {
+                maxRatio = entry.intersectionRatio;
+                mostVisibleLink = tocContainer.querySelector(`a[href="#${entry.target.getAttribute('id')}"]`);
+            }
+        });
+
+        if (mostVisibleLink) {
+            allLinks.forEach(l => l.classList.remove('active'));
+            mostVisibleLink.classList.add('active');
+            // mark parent chapter link active
+            const parentUl = mostVisibleLink.closest('ul');
+            if (parentUl) {
+                const parentLi = parentUl.closest('li');
+                if (parentLi) {
+                    const chapLink = parentLi.querySelector('.sidebar-link');
+                    if (chapLink) {
+                        chapLink.classList.add('active');
+                    }
+                }
+            }
+        }
+    }, { rootMargin: "0px 0px -80% 0px", threshold: [0.1, 0.4, 0.9] });
+
+    allSections.forEach(section => observer.observe(section));
+
+    // Mobile menu
+    const menuToggle = document.getElementById('menu-toggle');
+    const sidebar = document.getElementById('sidebar');
+    menuToggle.addEventListener('click', () => sidebar.classList.toggle('open'));
+    document.addEventListener('click', (e) => {
+        if (!sidebar.contains(e.target) && !menuToggle.contains(e.target) && sidebar.classList.contains('open')) {
+            sidebar.classList.remove('open');
+        }
+    });
+    tocContainer.addEventListener('click', (e) => {
+        if (e.target.tagName === 'A' && window.innerWidth < 1024) {
+            sidebar.classList.remove('open');
+        }
+    });
+
+    // Back to top
+    const backToTopBtn = document.getElementById('back-to-top');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            backToTopBtn.classList.add('visible');
+        } else {
+            backToTopBtn.classList.remove('visible');
+        }
+    });
+    backToTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+});
+</script>
+
+</body>
+</html>

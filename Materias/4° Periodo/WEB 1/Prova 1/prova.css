@@ -1,0 +1,11 @@
+div{ float:left; width:25%; border-style: dashed; }
+@media screen and (max-width:600px) {
+#dA{width: 50%; border-style: dashed }
+#dS{ width: 100%;}
+#dZ{width: 50%;}
+}
+@media screen and (min-width:600px) and (max-width:1000px){
+#dA{width: 75%; border-style: dashed;}
+#dS{width: 50%}
+#dZ{width: 75%; border-style: dashed;}
+}

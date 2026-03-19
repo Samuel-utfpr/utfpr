@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia de Estudos Completo: Sistemas Operacionais</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .prose { color: #374151; }
+        .dark .prose { color: #d1d5db; }
+        .prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 { color: #1f2937; }
+        .dark .prose h1, .dark .prose h2, .dark .prose h3, .dark .prose h4, .dark .prose h5, .dark .prose h6 { color: #f9fafb; }
+        .prose code { background-color: #e5e7eb; padding: 0.1rem 0.3rem; border-radius: 0.25rem; font-size: 0.9em; font-family: 'Courier New', Courier, monospace; }
+        .dark .prose code { background-color: #374151; color: #e5e7eb; }
+        .prose pre { background-color: #f3f4f6; padding: 1rem; border-radius: 0.5rem; }
+        .dark .prose pre { background-color: #1f2937; }
+        .prose blockquote { border-left: 4px solid #d1d5db; padding-left: 1rem; font-style: italic; color: #6b7280; }
+        .dark .prose blockquote { border-left-color: #4b5563; color: #9ca3af; }
+        .dark body { background-color: #111827; color: #e2e8f0; }
+        .dark .card, .dark .header-card, .dark .sidenav { background-color: #1f2937; border-color: #374151; }
+        .dark .collapsible { background-color: #374151; }
+        .dark .collapsible:hover { background-color: #4b5563; }
+        .dark .collapsible.active { background-color: #111827; }
+        .dark .sidenav a { color: #d1d5db; }
+        .dark .sidenav a.active { background-color: #374151; color: #ffffff; }
+        .dark .sidenav a:hover { background-color: #374151; }
+        .content { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out, padding 0.5s ease-out; padding: 0 1.5rem; }
+        .sidenav a.active { background-color: #e5e7eb; font-weight: 600; color: #1f2937; transform: translateX(4px); border-left: 3px solid #3b82f6; }
+        .sidenav a { transition: all 0.2s ease-in-out; border-left: 3px solid transparent; }
+        .sidenav a:hover { background-color: #f3f4f6; transform: translateX(2px); }
+        #toTopBtn { transition: opacity 0.3s, visibility 0.3s; }
+        .prose img {
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            border: 1px solid #e5e7eb;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .dark .prose img {
+            border-color: #374151;
+        }
+        .collapsible::after {
+            content: '+';
+            font-size: 1.5rem;
+            float: right;
+            transition: transform 0.3s;
+        }
+        .collapsible.active::after {
+            transform: rotate(45deg);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <!-- Navegação Lateral -->
+    <nav class="sidenav fixed top-0 left-0 h-full w-64 bg-white p-5 shadow-lg hidden lg:block overflow-y-auto">
+        <h2 class="text-xl font-bold mb-6 text-gray-800 dark:text-gray-200">Tópicos da Revisão</h2>
+        <ul class="space-y-1 text-sm">
+            <li><a href="#intro-so" class="block p-2 rounded-md font-medium">1. Introdução ao SO</a></li>
+            <li><a href="#gerencia-processos" class="block p-2 rounded-md font-medium">2. Gerenciamento de Processos</a></li>
+            <li><a href="#threads" class="block p-2 rounded-md font-medium">3. Threads</a></li>
+            <li><a href="#escalonamento" class="block p-2 rounded-md font-medium">4. Escalonamento de CPU</a>
+                <ul class="ml-4 mt-1 space-y-1">
+                    <li><a href="#escalonamento-batch" class="block p-1 rounded-md text-xs">4.1 Batch</a></li>
+                    <li><a href="#escalonamento-interativo" class="block p-1 rounded-md text-xs">4.2 Interativo</a></li>
+                    <li><a href="#escalonamento-tr" class="block p-1 rounded-md text-xs">4.3 Tempo Real</a></li>
+                </ul>
+            </li>
+            <li><a href="#sincronizacao" class="block p-2 rounded-md font-medium">5. Sincronização</a>
+                 <ul class="ml-4 mt-1 space-y-1">
+                    <li><a href="#sinc-problemas" class="block p-1 rounded-md text-xs">5.1 Problemas</a></li>
+                    <li><a href="#sinc-solucoes" class="block p-1 rounded-md text-xs">5.2 Soluções</a></li>
+                    <li><a href="#sinc-classicos" class="block p-1 rounded-md text-xs">5.3 Problemas Clássicos</a></li>
+                </ul>
+            </li>
+            <li><a href="#transcricoes" class="block p-2 rounded-md font-medium">6. Transcrições das Aulas</a></li>
+            <li><a href="#dicas" class="block p-2 rounded-md font-medium">Dicas Finais</a></li>
+        </ul>
+        <div class="absolute bottom-5 left-5">
+            <button id="themeToggle" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300">
+                <svg id="theme-icon-sun" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m8.66-15.66l-.707.707M4.04 19.96l-.707.707M21 12h-1M4 12H3m15.66 8.66l-.707-.707M4.04 4.04l-.707-.707"/></svg>
+                <svg id="theme-icon-moon" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Conteúdo Principal -->
+    <main class="lg:ml-64 p-4 md:p-8">
+        <div class="max-w-4xl mx-auto">
+
+            <header class="header-card bg-white p-6 rounded-xl shadow-md mb-8 border border-gray-200">
+                <h1 class="text-4xl font-bold text-center text-blue-600 dark:text-blue-400">Guia de Estudos Completo: Sistemas Operacionais</h1>
+                <p class="text-center text-gray-600 dark:text-gray-300 mt-2">Um guia detalhado e aprofundado com base nos materiais de aula para sua prova.</p>
+            </header>
+
+            <!-- Seção de Introdução ao SO -->
+            <section id="intro-so" class="card bg-white p-4 rounded-xl shadow-md mb-6 border border-gray-200">
+                <button class="collapsible w-full text-left text-2xl font-bold p-4 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors duration-300">
+                    1. Introdução aos Sistemas Operacionais
+                </button>
+                <div class="content">
+                    <div class="prose max-w-none mt-4 p-4 space-y-6">
+                        <p>Esta seção cobre os conceitos fundamentais de um SO, suas funções, histórico e as diferentes arquiteturas existentes.</p>
+                        
+                        <h4 class="font-semibold text-lg">1.1 O que é um Sistema Operacional (SO)?</h4>
+                        <blockquote>O SO é uma camada de software que atua como intermediário entre o hardware e os aplicativos, simplificando e gerenciando o acesso aos recursos do computador.</blockquote>
+                        <div class="flex justify-center my-4">
+                            <img src="https://i.imgur.com/KqY2n67.png" alt="Diagrama da estrutura de um SO" class="rounded-lg shadow-md border">
+                        </div>
+                        <p>Ele desempenha duas funções principais:</p>
+                        <ul>
+                            <li><strong>Máquina Estendida (Abstração de Recursos):</strong> O SO esconde a complexidade do hardware (registradores, interrupções, controladores de disco) e fornece uma interface mais simples e limpa (abstrações) para os programadores e aplicativos. Por exemplo, a complexidade de ler um bloco de um SSD é abstraída para uma simples chamada de sistema como `read()`.</li>
+                            <li><strong>Gerenciador de Recursos:</strong> O SO gerencia todos os recursos do sistema (CPU, memória, E/S) de forma ordenada e controlada, decidindo qual processo usa qual recurso, por quanto tempo e quando. Isso é crucial em sistemas multiusuário e multitarefa para garantir a justiça e a eficiência.</li>
+                        </ul>
+
+                        <h4 class="font-semibold text-lg">1.2 Tipos e Estruturas de SO</h4>
+                        <p>Sistemas operacionais podem ser classificados por sua arquitetura interna:</p>
+                        <div class="flex justify-center my-4">
+                            <img src="https://i.imgur.com/8Qp4Z7o.png" alt="Imagem de um Moai representando um sistema monolítico" class="rounded-lg shadow-md border max-w-xs">
+                        </div>
+                        <ul class="list-disc list-inside">
+                            <li><strong>Sistemas Monolíticos:</strong> Todo o SO (gerenciamento de processos, memória, arquivos, drivers) roda como um único programa grande no modo kernel. É rápido, mas uma falha em um driver pode derrubar todo o sistema. Ex: Linux, Windows (em grande parte).</li>
+                             <div class="flex justify-center my-4">
+                                <img src="https://i.imgur.com/V9r9p6V.png" alt="Arquitetura de um sistema monolítico" class="rounded-lg shadow-md border">
+                            </div>
+                            <li><strong>Sistemas em Camadas:</strong> O SO é organizado em uma hierarquia de camadas, onde cada camada usa apenas os serviços da camada imediatamente inferior. Ajuda na organização, mas pode ser ineficiente.</li>
+                            <li><strong>Micronúcleo (Microkernel):</strong> Apenas as funções mais essenciais do SO rodam no modo kernel (comunicação entre processos, gerenciamento básico de memória). O restante (drivers, sistema de arquivos) roda como processos de usuário. É mais modular e seguro, mas a comunicação entre os processos pode ser um gargalo de desempenho. Ex: Minix 3.</li>
+                             <div class="flex justify-center my-4">
+                                <img src="https://i.imgur.com/eBw6e1b.png" alt="Arquitetura de um sistema com micronúcleo (Minix 3)" class="rounded-lg shadow-md border">
+                            </div>
+                            <li><strong>Sistemas Híbridos:</strong> A maioria dos SOs modernos, como Windows e macOS, combina elementos das arquiteturas monolítica e de micronúcleo para equilibrar desempenho e modularidade.</li>
+                        </ul>
+
+                         <h4 class="font-semibold text-lg">1.3 Chamadas de Sistema (System Calls)</h4>
+                        <p>É a interface que os programas de usuário utilizam para solicitar serviços do núcleo do SO. Como os aplicativos rodam em modo usuário (com privilégios limitados), eles não podem acessar o hardware diretamente. Para realizar operações como ler um arquivo, criar um novo processo ou enviar um pacote de rede, eles precisam fazer uma "chamada de sistema". Esse mecanismo causa um *trap* (uma interrupção de software) que transfere o controle da CPU para o kernel. O kernel então executa a operação solicitada em modo privilegiado e retorna o resultado ao processo do usuário, que pode assim continuar sua execução.</p>
+                        <div class="flex justify-center my-4">
+                           <img src="https://i.imgur.com/vHqgJb1.png" alt="Fluxo de uma chamada de sistema" class="rounded-lg shadow-md border">
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Seção de Gerenciamento de Processos -->
+            <section id="gerencia-processos" class="card bg-white p-4 rounded-xl shadow-md mb-6 border border-gray-200">
+                <button class="collapsible w-full text-left text-2xl font-bold p-4 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors duration-300">
+                    2. Gerenciamento de Processos
+                </button>
+                <div class="content">
+                    <div class="prose max-w-none mt-4 p-4 space-y-6">
+                        <p>Um processo é a abstração central de um programa em execução. O SO é responsável por criar, destruir e gerenciar todos os processos.</p>
+                        <h4 class="font-semibold text-lg">2.1 Modelo e Estados de um Processo</h4>
+                        <div class="flex justify-center my-4">
+                           <img src="https://i.imgur.com/zW3bY4E.png" alt="Diagrama de multiprogramação e processos sequenciais" class="rounded-lg shadow-md border">
+                        </div>
+                        <ul>
+                            <li><strong>Processo:</strong> Instância de um programa em execução. É uma entidade dinâmica que possui um espaço de endereçamento, código, dados, pilha e recursos.</li>
+                            <li><strong>Estados de um Processo:</strong>
+                                <ol class="list-decimal list-inside ml-4">
+                                    <li><strong>Executando (Running):</strong> O processo está efetivamente usando a CPU para executar suas instruções.</li>
+                                    <li><strong>Pronto (Ready):</strong> O processo tem tudo o que precisa para executar, mas está na fila de prontos, aguardando a CPU ser alocada a ele pelo escalonador.</li>
+                                    <li><strong>Bloqueado (Blocked):</strong> O processo não pode continuar sua execução, pois está esperando por um evento externo. Exemplos: esperando o término de uma leitura de disco, esperando por uma entrada do teclado ou esperando que outro processo libere um recurso. Ele não consumirá CPU enquanto estiver neste estado.</li>
+                                </ol>
+                            </li>
+                        </ul>
+                         <div class="flex justify-center my-4">
+                           <img src="https://i.imgur.com/G5v3O4E.png" alt="Diagrama de estados do processo com transições" class="rounded-lg shadow-md border">
+                        </div>
+                        
+                        <h4 class="font-semibold text-lg">2.2 Bloco de Controle de Processo (BCP)</h4>
+                        <p>O BCP (PCB - Process Control Block) é a "identidade" de um processo para o sistema operacional. É uma estrutura de dados fundamental que armazena todo o contexto necessário para gerenciar um processo. Quando o SO realiza uma troca de contexto, ele salva o estado atual da CPU no BCP do processo que está saindo e carrega o estado do próximo processo a partir do seu BCP.</p>
+                        <div class="flex justify-center my-4">
+                            <img src="https://i.imgur.com/N7k1xO0.png" alt="Tabela de processos e BCPs" class="rounded-lg shadow-md border">
+                        </div>
+                        <p>Campos típicos de um BCP incluem:</p>
+                        <ul class="list-disc list-inside">
+                            <li><strong>Gerenciamento de Processo:</strong> Estado atual, ID do processo (PID), ID do processo pai, prioridade de escalonamento.</li>
+                            <li><strong>Gerenciamento de Memória:</strong> Ponteiros para os segmentos de código, dados e pilha.</li>
+                            <li><strong>Gerenciamento de Arquivos:</strong> Lista de arquivos abertos.</li>
+                            <li><strong>Contexto de Hardware:</strong> Conteúdo dos registradores da CPU, incluindo o contador de programa.</li>
+                        </ul>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- Seção de Threads -->
+             <section id="threads" class="card bg-white p-4 rounded-xl shadow-md mb-6 border border-gray-200">
+                <button class="collapsible w-full text-left text-2xl font-bold p-4 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors duration-300">
+                    3. Threads
+                </button>
+                <div class="content">
+                    <div class="prose max-w-none mt-4 p-4 space-y-6">
+                        <p>Threads, ou "processos leves", permitem que um único processo execute múltiplas tarefas concorrentemente, oferecendo um modelo mais eficiente para o paralelismo em muitas aplicações.</p>
+                        <h4 class="font-semibold text-lg">3.1 O Modelo de Threads</h4>
+                        <blockquote>Uma thread é uma unidade de execução dentro de um processo. Múltiplas threads dentro de um mesmo processo compartilham o mesmo espaço de endereçamento e recursos (como arquivos abertos), mas cada uma tem seu próprio contador de programa, registradores e pilha.</blockquote>
+                        <div class="flex flex-col md:flex-row justify-around items-center my-4 gap-4">
+                             <figure class="text-center">
+                                <img src="https://i.imgur.com/gK9qQ6x.png" alt="Processos single-threaded" class="rounded-lg shadow-md border h-48">
+                                <figcaption class="text-sm mt-2">Três processos, cada um com uma thread.</figcaption>
+                            </figure>
+                            <figure class="text-center">
+                                <img src="https://i.imgur.com/f0u8z6y.png" alt="Processo multi-threaded" class="rounded-lg shadow-md border h-48">
+                                <figcaption class="text-sm mt-2">Um processo com três threads.</figcaption>
+                            </figure>
+                        </div>
+                        <h4 class="font-semibold text-lg">3.2 Benefícios do Multithreading</h4>
+                        <ul class="list-disc list-inside">
+                            <li><strong>Responsividade:</strong> Em uma aplicação com interface gráfica, uma thread pode cuidar da interação com o usuário enquanto outra executa uma tarefa demorada em segundo plano. Ex: Um editor de texto salvando um arquivo em uma thread separada sem travar a interface.</li>
+                            <li><strong>Compartilhamento de Recursos:</strong> Facilita a comunicação e a colaboração entre partes de um mesmo programa, pois todas as threads acessam as mesmas variáveis globais e o mesmo heap de memória.</li>
+                            <li><strong>Economia:</strong> É muito mais "barato" (rápido e com menos overhead) para o SO criar e gerenciar threads do que processos. A troca de contexto entre threads de um mesmo processo também é mais eficiente.</li>
+                            <li><strong>Escalabilidade:</strong> Essencial para aproveitar arquiteturas multicore. O SO pode escalonar diferentes threads do mesmo processo para serem executadas verdadeiramente em paralelo em diferentes núcleos de CPU.</li>
+                        </ul>
+                        <h4 class="font-semibold text-lg">3.3 Implementação de Threads: Modo Usuário vs. Modo Kernel</h4>
+                        <div class="flex justify-center my-4">
+                            <img src="https://i.imgur.com/o7b8g6H.png" alt="Comparação entre threads em modo usuário e modo kernel" class="rounded-lg shadow-md border">
+                        </div>
+                        <ul>
+                           <li><strong>Threads em Espaço de Usuário:</strong>
+                                <ul>
+                                   <li>O kernel não "enxerga" as threads; elas são gerenciadas por uma biblioteca de runtime no espaço do processo.</li>
+                                   <li><strong>Vantagens:</strong> Criação e troca de contexto extremamente rápidas, sem a necessidade de chamadas de sistema.</li>
+                                   <li><strong>Desvantagem principal:</strong> Se uma thread faz uma chamada de sistema bloqueante (ex: `read()`), o kernel bloqueia o processo inteiro, parando todas as outras threads.</li>
+                                </ul>
+                           </li>
+                           <li><strong>Threads em Espaço de Kernel:</strong>
+                                <ul>
+                                   <li>O kernel gerencia as threads diretamente, mantendo uma tabela de threads para todo o sistema.</li>
+                                   <li><strong>Vantagens:</strong> Se uma thread bloqueia, o kernel pode escalonar outra thread (do mesmo processo ou de outro) para executar. É o modelo padrão nos SOs modernos (Windows, Linux, macOS).</li>
+                                   <li><strong>Desvantagem:</strong> A criação, destruição e troca de contexto são mais lentas por requererem chamadas ao sistema.</li>
+                                </ul>
+                           </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Seção de Escalonamento -->
+             <section id="escalonamento" class="card bg-white p-4 rounded-xl shadow-md mb-6 border border-gray-200">
+                <button class="collapsible w-full text-left text-2xl font-bold p-4 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors duration-300">
+                    4. Escalonamento de CPU
+                </button>
+                <div class="content">
+                    <div class="prose max-w-none mt-4 p-4 space-y-6">
+                        <p>O escalonamento decide qual processo ou thread na fila de prontos deve receber a CPU. A escolha do algoritmo impacta diretamente o desempenho, a responsividade e a justiça do sistema.</p>
+
+                        <h4 id="escalonamento-batch" class="font-semibold text-lg">4.1 Escalonamento para Sistemas em Batch</h4>
+                        <p>O objetivo principal é a vazão (throughput) e a utilização da CPU, não a interatividade.</p>
+                        <div class="flex justify-center my-4">
+                           <img src="https://i.imgur.com/i8v7mYn.png" alt="Diagrama do escalonamento em três níveis" class="rounded-lg shadow-md border">
+                        </div>
+                        <ul class="list-disc list-inside">
+                            <li><strong>FCFS (First-Come, First-Served):</strong> Simples e justo, mas pode ser muito ineficiente. Processos I/O-bound podem ficar presos atrás de um processo CPU-bound, deixando os dispositivos de E/S ociosos.</li>
+                            <li><strong>SJF (Shortest Job First):</strong> Provadamente ótimo para o tempo médio de retorno, mas requer conhecimento do futuro (o tempo de execução de cada job), o que é impossível na prática. É usado como uma base teórica de comparação.</li>
+                        </ul>
+                        
+                        <h4 id="escalonamento-interativo" class="font-semibold text-lg">4.2 Escalonamento para Sistemas Interativos</h4>
+                        <p>O objetivo principal é um bom tempo de resposta para o usuário.</p>
+                         <ul class="list-disc list-inside">
+                            <li><strong>Round-Robin:</strong> O algoritmo de escalonamento mais fundamental para sistemas interativos. Cada processo recebe um *quantum* de tempo. Se o processo ainda estiver rodando ao final do seu quantum, ele sofre preempção e é movido para o fim da fila de prontos.</li>
+                            <li><strong>Prioridades:</strong> Cada processo recebe uma prioridade. O escalonador sempre escolhe o processo pronto de maior prioridade. Prioridades podem ser estáticas ou dinâmicas. O perigo é a inanição (*starvation*) de processos de baixa prioridade.</li>
+                            <li><strong>Múltiplas Filas:</strong> Separa os processos em classes de prioridade (ex: interativos, batch), cada uma com sua própria política de escalonamento (ex: Round-Robin para interativos, FCFS para batch).</li>
+                            <li><strong>Loteria (Lottery Scheduling):</strong> Um algoritmo probabilístico. Processos recebem "bilhetes de loteria" para recursos (como a CPU). Processos mais importantes recebem mais bilhetes. Quando uma decisão de escalonamento precisa ser feita, um bilhete é sorteado aleatoriamente, e o processo que o possui ganha o recurso.</li>
+                        </ul>
+                        
+                        <h4 id="escalonamento-tr" class="font-semibold text-lg">4.3 Escalonamento em Tempo Real (Real-Time)</h4>
+                        <p>O critério mais importante é a previsibilidade e o cumprimento de prazos.</p>
+                        <ul class="list-disc list-inside">
+                            <li><strong>Hard Real-Time:</strong> Prazos absolutos que não podem ser perdidos. A falha em cumprir um prazo é uma falha catastrófica do sistema (ex: controle de voo de um avião, sistema de freios de um carro).</li>
+                            <li><strong>Soft Real-Time:</strong> Prazos importantes, mas que podem ser ocasionalmente perdidos sem consequências drásticas (ex: streaming de vídeo, onde perder um quadro não é o fim do mundo).</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+             <!-- Seção de Sincronização -->
+             <section id="sincronizacao" class="card bg-white p-4 rounded-xl shadow-md mb-6 border border-gray-200">
+                <button class="collapsible w-full text-left text-2xl font-bold p-4 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors duration-300">
+                    5. Sincronização de Processos
+                </button>
+                <div class="content">
+                     <div class="prose max-w-none mt-4 p-4 space-y-6">
+                         <p>Esta seção aborda os desafios da execução concorrente e os mecanismos utilizados para garantir que os processos cooperem de forma correta e segura.</p>
+
+                        <h4 id="sinc-problemas" class="font-semibold text-lg">5.1 O Problema da Região Crítica e Condições de Corrida</h4>
+                         <blockquote>Uma **Condição de Corrida (Race Condition)** ocorre quando múltiplos processos acessam e manipulam dados compartilhados concorrentemente, e o resultado final depende da ordem em que os acessos acontecem. A parte do programa onde o dado compartilhado é acessado é chamada de **Região Crítica**.</blockquote>
+                         <p>A solução é a **Exclusão Mútua**, que garante que apenas um processo esteja dentro de sua região crítica por vez.</p>
+                        <div class="flex justify-center my-4">
+                           <img src="https://i.imgur.com/G3j2h0f.png" alt="Exemplo do Spooler de Impressão com Race Condition" class="rounded-lg shadow-md border">
+                        </div>
+                        <h4 id="sinc-solucoes" class="font-semibold text-lg">5.2 Soluções para Exclusão Mútua</h4>
+                        <ul class="list-disc list-inside">
+                           <li><strong>Espera Ocupada (Busy Waiting):</strong> Soluções como `lock variables` e `strict alternation` são ineficientes pois desperdiçam ciclos de CPU. A **Instrução TSL (Test and Set Lock)** é uma solução baseada em hardware que resolve o problema de atomicidade, mas ainda mantém a espera ocupada.</li>
+                           <li><strong>Primitivas Sleep e Wakeup:</strong> Uma melhoria sobre a espera ocupada. O processo que precisa esperar é colocado em estado de **bloqueado** (`sleep`) e não consome CPU. Ele é acordado (`wakeup`) por outro processo quando pode prosseguir. Sofre do problema do **"wakeup perdido"**, que pode levar a deadlocks.</li>
+                           <li><strong>Semáforos:</strong> A solução clássica de Dijkstra. Um semáforo é um contador que suporta duas operações atômicas:
+                                <div class="flex justify-center my-4">
+                                   <img src="https://i.imgur.com/iM3w8gB.png" alt="Diagrama de estados de um semáforo binário" class="rounded-lg shadow-md border">
+                                </div>
+                                <ul>
+                                    <li>`down()` (ou `P` ou `wait`): Se o contador for maior que zero, decrementa. Se for zero, o processo bloqueia.</li>
+                                    <li>`up()` (ou `V` ou `signal`): Incrementa o contador. Se houver processos bloqueados, acorda um deles.</li>
+                                </ul>
+                                O semáforo **Mutex** é um semáforo binário usado para garantir exclusão mútua.
+                           </li>
+                           <li><strong>Monitores:</strong> Uma abstração de mais alto nível que simplifica a programação concorrente. O compilador garante a exclusão mútua em seus métodos. Processos esperam por eventos usando **variáveis de condição** (`wait` e `signal`).</li>
+                           <li><strong>Passagem de Mensagens:</strong> Processos comunicam-se enviando mensagens uns aos outros, ideal para sistemas distribuídos, usando primitivas como `send` e `receive`.</li>
+                        </ul>
+
+                        <h4 id="sinc-classicos" class="font-semibold text-lg">5.3 Problemas Clássicos de Sincronização</h4>
+                        <p>São problemas teóricos usados para testar e demonstrar a eficácia dos mecanismos de sincronização.</p>
+                        <ul class="list-disc list-inside">
+                            <li><strong>Produtor-Consumidor:</strong> Coordena o acesso a um buffer compartilhado, evitando que o produtor insira em um buffer cheio e o consumidor retire de um buffer vazio.</li>
+                            <div class="flex justify-center my-4">
+                               <img src="https://i.imgur.com/R3a2X4W.png" alt="Diagrama do problema produtor-consumidor" class="rounded-lg shadow-md border">
+                            </div>
+                            <li><strong>Jantar dos Filósofos:</strong> Ilustra o problema do *deadlock*, onde um conjunto de processos fica permanentemente bloqueado, cada um esperando por um recurso que está sendo mantido por outro processo no mesmo conjunto.</li>
+                             <div class="flex justify-center my-4">
+                               <img src="https://i.imgur.com/qR8v6jD.png" alt="Ilustração do problema do Jantar dos Filósofos" class="rounded-lg shadow-md border">
+                            </div>
+                            <li><strong>Leitores e Escritores:</strong> Gerencia o acesso a uma base de dados. Múltiplos leitores podem acessar simultaneamente, mas um escritor deve ter acesso exclusivo.</li>
+                            <div class="flex justify-center my-4">
+                               <img src="https://i.imgur.com/f8p8n1e.png" alt="Ilustração do problema Leitores e Escritores" class="rounded-lg shadow-md border">
+                            </div>
+                            <li><strong>Barbeiro Adormecido:</strong> Modela problemas de cliente-servidor. O barbeiro (servidor) dorme se não há clientes (requisições). O cliente deve acordar o barbeiro. Se chegam mais clientes enquanto o barbeiro está ocupado, eles esperam (se houver cadeiras/buffers) ou vão embora.</li>
+                              <div class="flex justify-center my-4">
+                               <img src="https://i.imgur.com/Xq3O0Fz.png" alt="Ilustração do problema do Barbeiro Adormecido" class="rounded-lg shadow-md border">
+                            </div>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Seção de Transcrições -->
+            <section id="transcricoes" class="card bg-white p-4 rounded-xl shadow-md mb-6 border border-gray-200">
+                <button class="collapsible w-full text-left text-2xl font-bold p-4 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors duration-300">
+                    6. Transcrições Completas das Aulas
+                </button>
+                <div class="content">
+                    <div class="prose max-w-none mt-4 p-4 space-y-6">
+                        <p>Aqui você encontra a transcrição completa dos áudios das aulas, organizada por data para facilitar a consulta.</p>
+
+                        <!-- Transcrição 21/08 -->
+                        <div class="card bg-gray-50 dark:bg-slate-800 p-2 rounded-lg my-4">
+                             <button class="collapsible w-full text-left font-semibold p-3 rounded-md bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors text-gray-800 dark:text-gray-200">
+                                Aula de 21/08
+                            </button>
+                            <div class="content">
+                                <div class="p-3 text-sm">
+                                    <h5 class="font-bold text-gray-900 dark:text-white">Parte 1 (SO - 21-08 - 1.m4a)</h5>
+                                    <p class="whitespace-pre-wrap text-xs text-gray-600 dark:text-gray-300">O que a gente viu na aula passada foi que cada processo tem o seu próprio espaço de endereçamento. Então, dentro desse espaço de endereçamento de um processo, ele tem lá as variáveis globais, os arquivos que ele tem aberto, os processos filhos que ele pode ter criado, os alarmes que podem estar pendentes para aquele processo ser executado e uma série de outras informações. Além disso, cada processo, ele tem o que a gente chama de fluxo de controle, né? Ou uma thread de controle. Ou seja, como que aquele processo vai ser executado do início ao fim. E aí eu comentei com vocês, por exemplo, que se eu tiver um sistema monoprocessado, com um único core de processamento, eu não tenho como ter dois ou mais processos sendo executados ao mesmo tempo. O que eu tenho, na verdade, é um falso paralelismo. Ora um processo executa, ora o outro processo executa, e assim por diante... E aí, quando a gente começa a trabalhar com sistemas multithread, a gente tem uma situação que é a seguinte: um único processo, ele pode ter múltiplos fluxos de controle. Ou seja, ele pode ter múltiplas threads. E aí, a gente tem um ganho em relação a isso. Por quê? Todas as threads daquele processo, elas vão compartilhar do mesmo espaço de endereçamento. Então, se eu tenho uma variável global para aquele processo, todas as threads têm acesso a essa variável. Se eu tenho um arquivo aberto para aquele processo, todas as threads têm acesso àquele arquivo. A gente vai ver mais para frente que isso é bom, mas também é ruim. Mas nesse primeiro momento, a gente vai focar só na parte boa, certo? Então, um processo com múltiplas threads, ele consegue realizar mais de uma tarefa ao mesmo tempo. É como, por exemplo, o navegador web. O navegador web que vocês utilizam, ele tem múltiplas threads. Então, enquanto uma thread tá renderizando a página, né, trazendo as informações da página, outras threads estão fazendo o download, por exemplo, das imagens que aquela página pode conter, certo? Então, se fosse um processo com um único fluxo, ele teria que fazer todo o download da página para depois renderizar, para depois fazer o download de uma imagem, depois fazer o download de outra imagem, e assim sucessivamente, certo? E aí, dentro do contexto de threads, a gente tem uma separação, né? Do que é item de processo e do que é item de thread. Como eu já falei, os itens de processo, espaço de endereçamento, variáveis globais, arquivos abertos, processos filhos e tudo mais. Uma thread, ela vai ter o seu próprio contador de programa, que vai dizer qual que é a próxima instrução daquela thread que vai ser executada. Ela vai ter os seus próprios registradores. Ela vai ter a sua própria pilha e ela vai ter o seu próprio estado. Lembrando, quais são os três estados básicos de um processo? Executando, pronto e bloqueado. Isso também vale para as threads. Uma thread também pode estar executando, uma thread também pode estar pronta e uma thread também pode estar bloqueada, certo?</p>
+                                    <hr class="my-4 border-gray-300 dark:border-gray-600">
+                                    <h5 class="font-bold text-gray-900 dark:text-white">Parte 2 (SO - 21-08 - 2.m4a)</h5>
+                                    <p class="whitespace-pre-wrap text-xs text-gray-600 dark:text-gray-300">...a gente tem um processo que ele tem um único fluxo de controle, que é o que está sendo representado aqui nessa primeira imagem, né, onde eu tenho lá o stack, o text, o data e o heap. O stack é a pilha de execução, o text é onde está o código, o data é onde estão os dados daquele processo e o heap é uma área de memória que o processo pode alocar de forma dinâmica, né? E ele tem o que está ali naquela caixinha, né, um stack pointer, um program counter e os registradores que compõem o contexto daquele processo. Além disso, ele tem o ID do processo, o grupo de ID, o user ID e os arquivos, locks e sockets que estão abertos para aquele processo. Já do outro lado, né, eu tenho um processo que agora ele tem duas threads, a thread 1 e a thread 2. Então, se vocês observarem o que está sendo compartilhado é o text, o data e o heap. E as demais informações. O que está separado para cada uma das threads é o stack, que é a pilha de execução. Porque cada thread, como eu falei, tem o seu próprio fluxo de execução. Consequentemente, cada uma delas vai ter a sua própria pilha. E vai ter também o seu próprio contexto, que é o stack pointer, o program counter e os registradores. Beleza? Então, a gente tem aqui uma imagem que representa bem essa diferença, né? De um processo com único fluxo para um processo com múltiplos fluxos de controle, certo? E aí, como eu falei com vocês, como cada thread pode ter acesso a qualquer endereço de memória dentro do espaço de endereçamento do processo, uma thread pode ler, escrever ou até mesmo apagar a pilha de uma outra thread. Isso pode acontecer. E não existe proteção para isso, né? Por dois motivos. Primeiro, porque é impossível, e segundo, porque não é necessário, pois, diferente dos processos que podem pertencer a diferentes usuários, as threads são sempre de um mesmo usuário. Então, se o processo pertence ao usuário Erinaldo, todas as threads daquele processo também pertencem ao usuário Erinaldo. Então, eu não tenho como dizer o seguinte, ó, a thread 1 pode acessar a pilha da thread 2, mas a thread 2 não pode acessar a pilha da thread 1. Isso não existe. Se elas estão no mesmo processo, elas podem acessar qualquer região de memória daquele processo, certo? Quais são as razões, né, para a existência de threads? Em múltiplas aplicações, ocorrem múltiplas atividades ao mesmo tempo, e algumas dessas atividades podem bloquear de tempos em tempos. As threads são mais fáceis de gerenciar do que processos, pois elas não possuem recursos próprios. Quem tem os recursos é o processo. E em termos de desempenho, quando há grande quantidade de entrada e saída, as threads permitem que essas atividades se sobreponham, acelerando a aplicação. E o paralelismo real, em sistemas com múltiplas CPUs, que foi o que eu comentei com vocês. Se eu tenho um processador com múltiplos cores, eu posso pegar cada uma das threads e entregar para um core de processamento. Aí sim, eu vou ter um paralelismo real. Porque cada uma das threads vai estar sendo executada em um core diferente, certo? Dúvidas? Perguntas? Beleza, vamos seguir. Um exemplo, né, de um servidor de arquivos, né? Ele recebe diversas requisições de leitura e escrita em arquivos e envia respostas a essas requisições. Para melhorar o desempenho, o servidor mantém um cache dos arquivos mais recentes, lendo da cache e escrevendo na cache quando possível. Quando uma requisição é feita, uma thread é alocada para o seu processamento. Suponha que essa thread seja bloqueada esperando uma transferência de arquivos. Nesse caso, outras threads podem continuar atendendo a outras requisições, certo? Então, se eu tenho um processo, que ele é um processo servidor, e ele tá recebendo requisições, né, de clientes, eu posso, para cada requisição, criar uma thread. A thread, ela vai ser responsável por atender a requisição daquele cliente. Se aquela thread for bloqueada, por qualquer que seja o motivo, as outras threads que não estão bloqueadas continuam executando. Certo? Porque o processo não vai ser bloqueado como um todo, porque ele tem outras threads que estão aptas a serem executadas.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                         <!-- Transcrição 28/08 -->
+                        <div class="card bg-gray-50 dark:bg-slate-800 p-2 rounded-lg my-4">
+                             <button class="collapsible w-full text-left font-semibold p-3 rounded-md bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors text-gray-800 dark:text-gray-200">
+                                Aula de 28/08
+                            </button>
+                            <div class="content">
+                                <div class="p-3 text-sm">
+                                    <h5 class="font-bold text-gray-900 dark:text-white">Parte 1 (SO - 28-08 - 1.m4a)</h5>
+                                    <p class="whitespace-pre-wrap text-xs text-gray-600 dark:text-gray-300">Quando eu tenho threads, eu posso ter múltiplos fluxos de controle do meu processo, né? Que é o que eu vou fazer aqui agora com esse processo que eu desenhei aqui no quadro. Vou desenhar mais duas outras linhas aqui na vertical e agora eu tenho um processo que tem três threads. O que significa dizer que eu posso entregar cada parte da minha página para ser carregada por uma thread, certo? Logo, se uma thread termina a sua execução, eu não preciso esperar com que o processo inteiro complete a sua execução para poder exibir aquele resultado intermediário.</p>
+                                    <hr class="my-4 border-gray-300 dark:border-gray-600">
+                                    <h5 class="font-bold text-gray-900 dark:text-white">Parte 2 (SO - 28-08 - 2.m4a)</h5>
+                                    <p class="whitespace-pre-wrap text-xs text-gray-600 dark:text-gray-300">...o que tem controle é o professor, que no caso aqui sou eu, representando o processo e vocês são as threads. Então aqui eu sei o que vocês estão fazendo. Se alguém derramar água no teclado, se alguém comer aqui em cima e a máquina danificar, foi você, vai ter que pagar. Certo? Se alguém tá bagunçando aqui minha aula e tal, vaza, tem uma galera aqui que tá prestando atenção. Eu gerencio aqui. A direção não tem como saber de nada disso, ela não tem visão de raio-x, né, para ilustrar melhor o exemplo, ela não tem como olhar pelas paredes das salas e saber o que que tá acontecendo em cada sala. A direção é o kernel. Então ela tem controle sobre as salas, mas o que acontece dentro das salas, ela não tem controle. Então quem gerencia as threads no espaço do usuário é o processo, porque o kernel não tem acesso às threads do usuário. Tá claro isso aí?</p>
+                                    <hr class="my-4 border-gray-300 dark:border-gray-600">
+                                     <h5 class="font-bold text-gray-900 dark:text-white">Parte 3 (SO - 28-08 - 3.m4a)</h5>
+                                    <p class="whitespace-pre-wrap text-xs text-gray-600 dark:text-gray-300">...espera ocupada. Constante checagem por algum valor. Algumas soluções para exclusão mútua com espera ocupada: desabilitar interrupções, variáveis de travamento (lock), estrita alternância e solução de Peterson e instrução TSL. Todas essas soluções que são baseadas em espera ocupada, vão consumir tempo de CPU testando se eu posso entrar ou não ali na minha região crítica. Então a gente viu que em termos práticos, isso não é uma boa solução. A gente viu algumas primitivas, né, como a solução de Peterson, uma solução baseada em instruções e tudo mais, né? Instruções do tipo TSL, e aí a gente chega nas primitivas de sleep e wakeup. E a ideia da primitiva de sleep e wakeup, vimos também variáveis de lock e unlock, né? A ideia de que eu bloqueio um recurso antes de entrar na minha região crítica, mas a gente também viu que tem alguns problemas, é que se eu não habilito, né, esse, esse recurso que eu acabei de utilizar quando eu saio da minha região crítica, aquele processo vai acabar sendo executado ali de forma indefinida, ou ele não vai permitir que outros processos acabem acessando sua região crítica, porque ele não liberou um recurso, mas de fato ele acabou, é, terminando a sua, a sua execução. As primitivas sleep e wakeup, como o próprio nome sugere, ela vai trabalhar com a ideia de que quando um processo, ele vai entrar na sua região crítica, né? É, ele vai, é, pegar uma primitiva de wakeup, no caso, e vai entregar uma primitiva de sleep, né, para um outro processo que vai tentar também acessar sua região crítica. E aí quando ele acabar, né, de acessar sua região crítica, ele envia esse sinal de wakeup para aquele processo ali que estava dormindo. Ou seja, um processo, antes de entrar na sua região crítica, ele vai verificar se um outro processo já está também executando sua região crítica. Se um outro processo já está executando sua região crítica, ele pega uma primitiva de sleep, né, e vai aguardar por uma primitiva de wakeup até que o processo que está executando na sua região crítica termine de ser executado.</p>
+                                    <hr class="my-4 border-gray-300 dark:border-gray-600">
+                                     <h5 class="font-bold text-gray-900 dark:text-white">Parte 4 (SO - 28-08 - 4.m4a)</h5>
+                                    <p class="whitespace-pre-wrap text-xs text-gray-600 dark:text-gray-300">Se um processo de baixa prioridade ele entra na sua região crítica, obrigatoriamente ele vai ter que sair se chegar um processo de uma prioridade maior do que ele. Então, um de alta prioridade começa a executar e quer entrar na sua região crítica, então tem que trocar. Então tem uma série de problemas aí quando a gente fala de uma solução baseada em espera ocupada, né? Tem mais problema de fato do que, do que solução. Isso se tratando de sistemas complexos, mas se eu tenho um sistema enxuto, que são poucos processos que ele tem para gerenciar, ele pode muito bem estar em espera ocupada. Contudo, né, ele pode trabalhar com espera ocupada e também com prioridade. Pô, se eu percebi que na, no processo de leitura da temperatura, ela tá acima do esperado, não dá pra terminar a execução desse processo. Já chama a rotina de resfriamento ali daquele reator, senão a coisa vai explodir.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                         <!-- Transcrição 11/09 -->
+                        <div class="card bg-gray-50 dark:bg-slate-800 p-2 rounded-lg my-4">
+                             <button class="collapsible w-full text-left font-semibold p-3 rounded-md bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors text-gray-800 dark:text-gray-200">
+                                Aula de 11/09
+                            </button>
+                            <div class="content">
+                                <div class="p-3 text-sm">
+                                    <h5 class="font-bold text-gray-900 dark:text-white">Parte 1 (SO - 11-09 - 1.m4a)</h5>
+                                    <p class="whitespace-pre-wrap text-xs text-gray-600 dark:text-gray-300">A gente tá falando de primitivas sleep e wakeup. A gente tá falando dessas primitivas por que mesmo? Por conta da comunicação de processo, certo? Algo chamado região crítica, exclusão mútua. A ideia da região crítica é quando eu quero impossibilitar que dois ou mais processos... uma região crítica de um código, assim por dizer, é algo quando dois processos estão disputando ali um recurso em comum, certo? E aí eu tenho que evitar esse tipo de situação. Eu exemplifiquei para vocês lá com o exemplo da fila de impressão. Se eu tinha dois processos, né? Um processo A e um processo B, esses processos queriam fazer suas impressões, o processo A vai lá e verifica qual é o próximo slot livre na fila de impressão, coloca o seu arquivo para imprimir, contudo acaba o tempo de processamento ali daquele processo e o processo B vai ser executado. E a gente viu em termos práticos que um processo vai acabar sobrescrevendo ali o arquivo do outro. E aí não é uma situação adequada. E a gente viu que para resolver esse tipo de problema aí, a gente adota alguns critérios, né? Como a exclusão mútua, por exemplo, e ela tem que obedecer aí alguns critérios. A gente trabalhou com a ideia de espera ocupada. Qual que é o problema da espera ocupada? O gasto de tempo de CPU testando se eu posso entrar ou não ali na minha região crítica. Então a gente viu que em termos práticos isso não é uma boa solução.</p>
+                                    <hr class="my-4 border-gray-300 dark:border-gray-600">
+                                    <h5 class="font-bold text-gray-900 dark:text-white">Parte 2 (SO - 11-09 - 2.m4a)</h5>
+                                    <p class="whitespace-pre-wrap text-xs text-gray-600 dark:text-gray-300">Ainda falando sobre exclusão mútua, né? Então a gente saiu ali de espera ocupada, primitivas sleep/wakeup e chega aí numa solução de exclusão mútua baseada em semáforos. A ideia é que, a partir do momento que eu lanço uma primitiva, seja de sleep ou seja de wakeup, eu lanço um bit correspondente a essa primitiva. E aí no momento da execução dos processos, eu faço a verificação tanto da primitiva quanto do bit. Se esse bit é um bit válido, é um bit 1, significa que há uma correspondência ali daquela primitiva. Se aquele bit é um bit zero, por exemplo, significa que não há uma correspondência ali daquela primitiva e o sistema vai ter que ou colocar o processo para dormir ou vai ter que acordar o processo de acordo com essa informação aí que ele tá monitorando. Basicamente é uma ideia de que é assim, para cada primitiva sleep, eu vou ter que ter uma primitiva wakeup. Então eu não posso ter duas primitivas sleeps para um wakeup. Essas primitivas sempre acontecem aos pares. Então se uma dessas primitivas foi perdida, significa que eu preciso colocar uma delas aí no lugar, seja para o processo que tá acordado, ou seja para o processo aí que tá dormindo.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- Dicas Finais -->
+            <section id="dicas" class="card bg-white p-4 rounded-xl shadow-md border border-gray-200">
+                <button class="collapsible w-full text-left text-2xl font-bold p-4 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors duration-300">
+                    Dicas Finais para o Estudo
+                </button>
+                <div class="content">
+                    <ul class="list-disc list-inside mt-4 p-4 space-y-3">
+                        <li><strong>Foque nos Conceitos Fundamentais:</strong> Entenda a diferença entre **processo e thread**, o que é **espaço de endereçamento**, e o ciclo de vida de um processo (**pronto, executando, bloqueado**). Esses são os alicerces de todo o resto.</li>
+                        <li><strong>Entenda os Problemas Antes das Soluções:</strong> Antes de decorar o que é um semáforo, entenda profundamente por que ele é necessário. Qual o problema da **condição de corrida**? Por que a **espera ocupada** é ruim? Por que a primitiva `sleep` sozinha não resolve?</li>
+                        <li><strong>Compare os Algoritmos de Escalonamento:</strong> Crie uma tabela mental ou no papel comparando os algoritmos (FCFS, SJF, Round-Robin, Prioridade). Quais são preemptivos e quais não são? Quais as vantagens e desvantagens de cada um? Em que tipo de sistema cada um se encaixa melhor?</li>
+                        <li><strong>Pratique com os Problemas Clássicos:</strong> Os problemas do **Produtor-Consumidor** e do **Jantar dos Filósofos** não são apenas curiosidades. Eles são excelentes ferramentas para solidificar seu entendimento sobre **exclusão mútua, deadlock e starvation**. Tente explicar com suas palavras como um semáforo resolveria o problema do produtor-consumidor.</li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+    </main>
+    
+    <!-- Botão Voltar ao Topo -->
+    <button id="toTopBtn" class="fixed bottom-5 right-5 bg-blue-500 hover:bg-blue-600 text-white p-3 rounded-full shadow-lg opacity-0 invisible transition-opacity">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" /></svg>
+    </button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const collapsibles = document.querySelectorAll('.collapsible');
+            collapsibles.forEach(button => {
+                button.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    const content = this.nextElementSibling;
+                    if (content.style.maxHeight) {
+                        content.style.maxHeight = null;
+                        content.style.padding = "0 1.5rem";
+                    } else {
+                        content.style.maxHeight = content.scrollHeight + "px";
+                        content.style.padding = "1rem 1.5rem";
+                    }
+                });
+            });
+
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.sidenav a');
+
+            const activateLink = (id) => {
+                let parentIdWithHash = '#' + id.split('-')[0];
+                if(id.startsWith('sinc-')){
+                    parentIdWithHash = '#sincronizacao'
+                }
+                if(id.startsWith('escalonamento-')){
+                    parentIdWithHash = '#escalonamento'
+                }
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    const linkHref = link.getAttribute('href');
+                    if (linkHref === `#${id}` || linkHref === parentIdWithHash) {
+                        link.classList.add('active');
+                    }
+                });
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        activateLink(entry.target.id);
+                    }
+                });
+            }, { rootMargin: '-20% 0px -70% 0px', threshold: 0.1 });
+
+            document.querySelectorAll('section[id], h4[id]').forEach(element => {
+                observer.observe(element);
+            });
+
+
+            const toTopBtn = document.getElementById('toTopBtn');
+            window.onscroll = function() {
+                if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+                    toTopBtn.classList.remove('opacity-0', 'invisible');
+                } else {
+                    toTopBtn.classList.add('opacity-0', 'invisible');
+                }
+            };
+            toTopBtn.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+            
+            const themeToggle = document.getElementById('themeToggle');
+            const sunIcon = document.getElementById('theme-icon-sun');
+            const moonIcon = document.getElementById('theme-icon-moon');
+            const bodyEl = document.body;
+
+            if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                bodyEl.classList.add('dark');
+                sunIcon.classList.add('hidden');
+                moonIcon.classList.remove('hidden');
+            }
+
+            themeToggle.addEventListener('click', () => {
+                bodyEl.classList.toggle('dark');
+                sunIcon.classList.toggle('hidden');
+                moonIcon.classList.toggle('hidden');
+                
+                if (bodyEl.classList.contains('dark')) {
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    localStorage.setItem('theme', 'light');
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
+

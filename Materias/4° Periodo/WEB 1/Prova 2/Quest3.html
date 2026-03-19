@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text">
+    <button onclick="Saudacao()">Exibir Saudação</button>
+    <label></label>
+    <script>
+        function Saudacao(){
+            cont = document.getElementsByTagName("label")[0];
+            nome = document.getElementsByTagName("input")[0].value;
+            cont.innerText="Olá, " + nome + "! Seja bem-vindo!";
+        }
+    </script>
+</body>
+</html>

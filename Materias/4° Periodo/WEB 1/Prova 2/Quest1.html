@@ -1,0 +1,36 @@
+<html>
+ <head>
+ <style>
+ div { border: 1px solid black;}
+ .grid-container {
+ display: grid;
+ grid-template-areas: "header header"
+ "menu content"
+ "footer footer";
+ }
+ .grid-container2{
+ display: grid;
+ grid-template-columns: 20% 40% 40%;
+ }
+ #iheader { grid-area: header; }
+ #ileft { grid-area: menu; }
+ #imain { grid-area: content; }
+ #ifooter { grid-area: footer; }
+ </style>
+ </head>
+ <body>
+ <div class="grid-container">
+ <div id="iheader"> <h3>1</h3> </div>
+ <div id="ileft"> <h3>2</h3> </div>
+ <div id="imain"> <h3>3</h3> </div>
+ <div id="ifooter"> <h3>4</h3> </div>
+ </div>
+ <br>
+ <div class="grid-container2">
+ <div> <h3>1</h3> </div>
+ <div> <h3>2</h3> </div>
+ <div> <h3>3</h3> </div>
+ <div> <h3>4</h3> </div>
+ </div>
+ </body>
+</html> 
